@@ -1,0 +1,6 @@
+body {
+    background-image: url('../public/background2.jpg');
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+}

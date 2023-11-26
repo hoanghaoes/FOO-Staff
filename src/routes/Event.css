@@ -1,0 +1,80 @@
+.event-map {
+    padding: 20px;
+}
+
+.add-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5%;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    margin-left: 93%;
+}
+
+.event-table {
+    width: 80%;
+    border-collapse: collapse;
+}
+
+.event-table th, .event-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    height: 37px;
+}
+
+.event-table th {
+    background-color: #f2f2f2;
+}
+
+.info-icon, .edit-icon, .delete-icon {
+    cursor: pointer;
+    margin: 10px;
+}
+
+.pagination-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.first-last {
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+/* .active {
+background-color: #28a745;
+color: white;
+padding: 5px 10px;
+} */
+
+.event-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.event-column,
+.time-column,
+.action-column {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.event-column {
+    width: 81%;
+}
+
+.time-column {
+    width: 10%;
+}
+
+.action-column {
+    width: 3%;
+}
