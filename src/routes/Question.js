@@ -12,69 +12,65 @@ import { AiFillForward } from "react-icons/ai";
 import AddQuestion from "./addQuestion";
 
 const Questions = () => {
- const [questions, setQuestions] = useState([]);
- const [currentPage, setCurrentPage] = useState(1);
- const [questionsPerPage, setQuestionsPerPage] = useState(15);
- const yourAccessToken = "eyJhbGciOiJIUzM4NCJ9.eyJ1c2VyIjp7ImlkIjoiOWM4MmViMzQtODg3OS0xMWVlLWEyNDgtYjE5Y2RkOTdkM2U3IiwidXNlcm5hbWUiOiJob2FuZ2hhb2VzIiwiZGlzcGxheU5hbWUiOiJIb2FuZyBIYW8iLCJlbWFpbCI6ImhvYW5naGFvZXNAZ21haWwuY29tIiwicmFua2luZ1BvaW50IjowLCJiYWxhbmNlIjowfSwic3ViIjoiaG9hbmdoYW9lc0BnbWFpbC5jb20iLCJpYXQiOjE3MDA5OTMwODMsImV4cCI6MTcwMTA3OTQ4M30.vvWthwrR8xfXAe8Q19Ae34NTn93LbRfZOM77qnOs7e-ugSA0AXsU4o3O_hIpESd_";
+  const [questions, setQuestions] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [questionsPerPage, setQuestionsPerPage] = useState(15);
+  const yourAccessToken = "eyJhbGciOiJIUzM4NCJ9.eyJ1c2VyIjp7ImlkIjoiOWM4MmViMzQtODg3OS0xMWVlLWEyNDgtYjE5Y2RkOTdkM2U3IiwidXNlcm5hbWUiOiJob2FuZ2hhb2VzIiwiZGlzcGxheU5hbWUiOiJIb2FuZyBIYW8iLCJlbWFpbCI6ImhvYW5naGFvZXNAZ21haWwuY29tIiwicmFua2luZ1BvaW50IjowLCJiYWxhbmNlIjowfSwic3ViIjoiaG9hbmdoYW9lc0BnbWFpbC5jb20iLCJpYXQiOjE3MDA5OTMwODMsImV4cCI6MTcwMTA3OTQ4M30.vvWthwrR8xfXAe8Q19Ae34NTn93LbRfZOM77qnOs7e-ugSA0AXsU4o3O_hIpESd_";
 
- const fetchQuestions = async () => {
-  try {
-     const response = await fetch("http:/192.168.2.54:8081/api/v1/quizzes", {
-       method: 'GET',
-       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${yourAccessToken}`,
-       },
-       body: JSON.stringify({
-        email: 'hoanghaoes@gmail.com',
-        password: '1',
-    }),
-     });
- 
-     if (!response.ok) {
-       throw new Error('Error fetching questions');
-     }
- 
-     const questions = await response.json();
-     setQuestions(questions);
-  } catch (error) {
-     console.error('Failed to fetch questions:', error);
-  }
- };
 
- useEffect(() => {
-    fetchQuestions();
- }, []);
+  const fetchQuestions = async () => {
+    try {
+      const response = await fetch("http:/192.168.2.54:8081/api/v1/quizzes", {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
- const indexOfLastQuestion = currentPage * questionsPerPage;
- const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
- const currentQuestions = questions.slice(indexOfFirstQuestion, indexOfLastQuestion);
+      if (!response.ok) {
+        throw new Error('Error fetching questions');
+      }
 
- const deleteQuestion = async (id) => {
-  const requestOptions = {
-     method: "DELETE",
-     headers: {
-       'Authorization': 'Beerer ' + yourAccessToken,
-     }
+      const questions = await response.json();
+      setQuestions(questions);
+    } catch (error) {
+      console.error('Failed to fetch questions:', error);
+    }
   };
- 
-  try {
-     await fetch(`http:/localhost:8081/api/v1/quizzes/${id}`, requestOptions);
-     fetchQuestions();
-  } catch (error) {
-     console.error("Error in deleteQuestion: ", error);
-  }
- };
 
- const paginate = (pageNumber) => {
-  const totalPages = Math.ceil(questions.length / questionsPerPage);
-  setCurrentPage(Math.max(1, Math.min(pageNumber, totalPages)));
- }; const emptyRows = questionsPerPage - currentQuestions.length;
+  useEffect(() => {
+    fetchQuestions();
+  }, []);
 
- return (
+  const indexOfLastQuestion = currentPage * questionsPerPage;
+  const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
+  const currentQuestions = questions.slice(indexOfFirstQuestion, indexOfLastQuestion);
+
+  const deleteQuestion = async (id) => {
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        'Authorization': 'Beerer ' + yourAccessToken,
+      }
+    };
+
+    try {
+      await fetch(`http:/localhost:8081/api/v1/quizzes/${id}`, requestOptions);
+      fetchQuestions();
+    } catch (error) {
+      console.error("Error in deleteQuestion: ", error);
+    }
+  };
+
+  const paginate = (pageNumber) => {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    setCurrentPage(Math.max(1, Math.min(pageNumber, totalPages)));
+  }; const emptyRows = questionsPerPage - currentQuestions.length;
+
+  return (
     <div className="questions-map">
       <Link to={"add-question"}>
-        <button className="add-button">Add <AiFillFileAdd/></button>
+        <button className="add-button">Add <AiFillFileAdd /></button>
       </Link>
       <table className="questions-table">
         <thead>
@@ -88,7 +84,7 @@ const Questions = () => {
           </tr>
         </thead>
         <tbody>
-          {currentQuestions.map(({ question,point, image, id }, index) => (
+          {currentQuestions.map(({ question, point, image, id }, index) => (
             <tr>
               <td> {image.length > 25 ? `${image.slice(0, 25)}...` : image}</td>
               <td> {question.length > 40 ? `${question.slice(0, 40)}...` : question}</td>
@@ -117,7 +113,7 @@ const Questions = () => {
           )}
         </tbody>
       </table>
-    {/* // <div className="question-container">
+      {/* // <div className="question-container">
     //   {currentQuestions.map(({ question, point, image, id }, index) => (
     //     <div className="question-row" key={index}>
     //       <div> {question.length > 40 ? `${question.slice(0, 40)}...` : question}</div>
@@ -143,7 +139,7 @@ const Questions = () => {
         </div>
       </div>
     </div>
- );
+  );
 };
 
 export default Questions;
