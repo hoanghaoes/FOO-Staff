@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom' ;
+import QuestionApi from "../api/QuizzesApi";
 import "./addQuestion.css"
-import { type } from "@testing-library/user-event/dist/type";
 
 const AddQuestion = () => {
  const [formData, setFormData] = useState({
@@ -22,7 +22,7 @@ const AddQuestion = () => {
 
  const addQuestion = async () => {
     try {
-      const response = await fetch('https://65588cefe93ca47020a9706c.mockapi.io/api/facts/question', {
+      const response = await fetch('http://127.0.0.1:8081/api/v1/quizzes', {
         method: "POST",
         body: JSON.stringify(formData),
         headers: { "Content-type": "application/json" },
@@ -45,7 +45,7 @@ const AddQuestion = () => {
           name="image"
           value={image}
           onChange={handleChange}
-          type="text"
+          type="file"
           placeholder="Image" 
         />
         <input

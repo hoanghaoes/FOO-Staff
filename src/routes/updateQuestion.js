@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import QuestionApi from "../api/QuizzesApi";
 import "./updateQuestion.css";
 
 const UpdateQuestion = () => {
@@ -13,16 +14,12 @@ const UpdateQuestion = () => {
  }, [_id]);
 
  async function getQuestions() {
-    try {
-      const response = await fetch(`https://65588cefe93ca47020a9706c.mockapi.io/api/facts/question/${_id}`);
-      if (!response.ok) {
-        throw new Error('HTTP error ' + response.status);
-      }
-      const data = await response.json();
-      setQuestions(data);
-    } catch (error) {
-      console.log('There was a problem with the fetch operation: ' + error.message);
-    }
+  try {
+    const questions = await QuestionApi.editQuestions();
+    setQuestions(questions);
+  } catch (error) {
+    console.error('Failed to fetch questions:', error.message);
+  }
  }
 
  return (

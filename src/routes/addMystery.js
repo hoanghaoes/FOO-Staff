@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom' ;
-import "./addFact.css"
+import "./addMystery.css"
 
-const AddFact = () => {
+const AddMystery = () => {
  const [formData, setFormData] = useState({
-    Fact: '',
+    Mystery: '',
     locationId: '',
  });
 
- const { Fact, locationId } = formData;
+ const { Mystery, locationId } = formData;
 
  const history = useNavigate();
 
@@ -17,9 +17,9 @@ const AddFact = () => {
     setFormData({ ...formData, [name]: value });
  };
 
- const addFact = async () => {
+ const addMystery = async () => {
     try {
-      const response = await fetch('https://65588cefe93ca47020a9706c.mockapi.io/api/facts/Fact', {
+      const response = await fetch('https://65588cefe93ca47020a9706c.mockapi.io/api/mysterys/Mystery', {
         method: "POST",
         body: JSON.stringify(formData),
         headers: { "Content-type": "application/json" },
@@ -37,13 +37,13 @@ const AddFact = () => {
 
  return (
     <div className="js-container">
-      <div className="add-Fact">
+      <div className="add-Mystery">
         <input
-          name="Fact"
-          value={Fact}
+          name="Mystery"
+          value={Mystery}
           onChange={handleChange}
           type="text"
-          placeholder="Fact"
+          placeholder="Mystery"
         />
         <input
           name="locationId"
@@ -52,7 +52,7 @@ const AddFact = () => {
           type="text"
           placeholder="Location"
         />
-        <button onClick={addFact} type="submit">
+        <button onClick={addMystery} type="submit">
           Add
         </button>
       </div>
@@ -60,4 +60,4 @@ const AddFact = () => {
  );
 };
 
-export default AddFact;
+export default AddMystery;

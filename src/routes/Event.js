@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./Fact.css";
+import "./Event.css";
 import { AiFillEdit } from "react-icons/ai";
 import { AiFillDelete } from "react-icons/ai";
 import { AiFillExclamationCircle } from "react-icons/ai";
@@ -74,18 +74,21 @@ const Event = () => {
       <table className="event-table">
         <thead>
           <tr>
-            <th className="event-column">Fact</th>
+            <th className="event-column">Event</th>
             <th className="time-column">Time</th>
+            <th className="location-column">Location</th>
+            <th className="poster-column">Image</th>
             <th className="action-column"></th>
             <th className="action-column"></th>
             <th className="action-column"></th>
           </tr>
         </thead>
         <tbody>
-          {currentEvent.map(({ event, time,  id }, index) => (
+          {currentEvent.map(({ event,image, time,  id }, index) => (
             <tr>
-              {/* <td> {image.length > 25 ? `${image.slice(0, 25)}...` : image}</td> */}
               <td> {event.length > 40 ? `${event.slice(0, 40)}...` : event}</td>
+              <td> {image.length > 25 ? `${image.slice(0, 25)}...` : image}</td>
+              <td>{time}</td>
               <td>
                 <i className="info-icon"><AiFillExclamationCircle /></i>
               </td>

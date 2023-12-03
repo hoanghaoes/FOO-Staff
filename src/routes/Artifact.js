@@ -19,7 +19,7 @@ const Artifact = () => {
 
  const fetchArtifact = async () => {
   try {
-     const response = await fetch("localhost:8081/api/v1/artifact", {
+     const response = await fetch("http:/127.0.0.1:8081/api/v1/artifact", {
        method: 'GET',
        headers: {
          'Authorization': `Bearer ${yourAccessToken}`,
