@@ -1,8 +1,6 @@
-# Getting Started with Create React App
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Available Scripts
 
 In the project directory, you can run:
 
@@ -12,7 +10,8 @@ Intall node module.
 
 ### `npm install axios`
 
-Intall axios to fetch api.
+Intall axios to call api.\
+About axios: axios is just a library for making HTTP requests from JavaScript, so you can use it in any JavaScript application, not just React apps. However, React apps often require working with asynchronous data, and axios is a convenient tool for managing those asynchronous requests.
 
 #### `npm start`
 
