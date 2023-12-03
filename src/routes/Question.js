@@ -21,6 +21,9 @@ const Questions = () => {
   const fetchQuestions = async () => {
     try {
       const questions = await QuestionApi.getQuestions();
+      questions.forEach(question => {
+        question.image = question.image.name;
+      });
       setQuestions(questions);
     } catch (error) {
       console.error('Failed to fetch questions:', error.message);
@@ -74,7 +77,7 @@ const Questions = () => {
         <tbody>
           {currentQuestions.map(({ question, point, image, id }, index) => (
             <tr>
-              <td> {image.length > 25 ? `${image.slice(0, 25)}...` : image}</td>
+              <td> {image}</td>
               <td> {question.length > 40 ? `${question.slice(0, 40)}...` : question}</td>
               <td> {point} </td>
               <td>
