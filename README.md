@@ -13,7 +13,7 @@ Intall node module.
 Intall axios to call api.\
 About axios: axios is just a library for making HTTP requests from JavaScript, so you can use it in any JavaScript application, not just React apps. However, React apps often require working with asynchronous data, and axios is a convenient tool for managing those asynchronous requests.
 
-#### `npm start`
+### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
