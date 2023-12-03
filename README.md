@@ -6,7 +6,7 @@ In the project directory, you can run:
 
 ### `npm install`
 
-Intall node module.
+Downloads and installs the necessary dependencies of a [Node.js](https://nodejs.org/en) project. It does this by reading the dependencies from the package.json file in the project's root directory.
 
 ### `npm install axios`
 
