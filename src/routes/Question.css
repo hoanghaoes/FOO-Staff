@@ -85,15 +85,27 @@
 }
 
 .image-column {
-    width: 30%;
+    width: 15%;
 }
 
 .questions-column {
-    width: 53%;
+    width: 15%;
 }
 
 .point-column {
-    width: 8%;
+    width: 5%;
+}
+
+.correctAns-column {
+    width: 12%;
+}
+
+.answer-column {
+    width: 10%;
+}
+
+.des-column {
+    width: 38%;
 }
 
 .action-column {

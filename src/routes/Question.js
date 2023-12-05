@@ -83,24 +83,24 @@ const Questions = () => {
             <th className="image-column">Image</th>
             <th className="questions-column">Questions</th>
             <th className="point-column">Point</th>
-            <th className="action-column"></th>
+            <th className="correctAns-column">Correct</th>
+            <th className="answer-column">Answer</th>
+            <th className="des-column">Description</th>
             <th className="action-column"></th>
             <th className="action-column"></th>
           </tr>
         </thead>
         <tbody>
-          {currentQuestions.map(({ question, point, imageUrl, id }, index) => (
+          {currentQuestions.map(({ question, point, correctAnswer, imageUrl,answer,description, id }, index) => (
             <tr key={id}>
               <td>
                 <img className="question-image" src={imageUrl} alt={`Question ${index + 1}`} />
               </td>
               <td>{question}</td>
               <td>{point}</td>
-              <td>
-                <i className="info-icon" onClick={() => handleInfoClick(id)}>
-                  <AiFillExclamationCircle />
-                </i>
-              </td>
+              <td>{correctAnswer}</td>
+              <td>{answer}</td>
+              <td>{description}</td>
               <td>
                 <i className="edit-icon" onClick={() => handleEditClick(id)}>
                   <AiFillEdit />
@@ -116,11 +116,7 @@ const Questions = () => {
           {emptyRows > 0 && (
             Array.from({ length: emptyRows }, (_, index) => (
               <tr key={`empty-${index}`}>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td colSpan="7"></td>
               </tr>
             ))
           )}
