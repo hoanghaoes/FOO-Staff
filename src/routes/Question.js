@@ -3,14 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Question.css";
-import { AiFillEdit } from "react-icons/ai";
-import { AiFillDelete } from "react-icons/ai";
-import { AiFillExclamationCircle } from "react-icons/ai";
-import { AiFillFileAdd } from "react-icons/ai";
-import { AiFillFastBackward } from "react-icons/ai";
-import { AiFillFastForward } from "react-icons/ai";
-import { AiFillBackward } from "react-icons/ai";
-import { AiFillForward } from "react-icons/ai";
+import { AiFillEdit, AiFillDelete, AiFillExclamationCircle, AiFillFileAdd, AiFillFastBackward, AiFillFastForward, AiFillBackward, AiFillForward } from "react-icons/ai";
 import useAuth from "../api/useAuth";
 
 const Questions = () => {
@@ -18,21 +11,25 @@ const Questions = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [questionsPerPage, setQuestionsPerPage] = useState(15);
   const { isAuthenticated, token } = useAuth();
-  const accessToken=localStorage.getItem('accessToken');
+  const accessToken = localStorage.getItem('accessToken');
 
   const fetchQuestions = async () => {
     try {
-       const questions = await axios.get("http://127.0.0.1:8081/api/v1/quizzes", {
-         headers: { Authorization: `Bearer ${accessToken}` },
-       });
-       questions.data.forEach(question => {
-         question.image = question.image.name;
-       });
-       setQuestions(questions.data);
+      const questionsResponse = await axios.get("http://35.198.240.131:8081/api/v1/quizzes", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      const updatedQuestions = questionsResponse.data.map((question) => {
+        const imageBlob = new Blob([question.image.data], { type: question.image.contentType });
+        const imageUrl = URL.createObjectURL(imageBlob);
+        return { ...question, imageUrl };
+      });
+
+      setQuestions(updatedQuestions);
     } catch (error) {
-       console.error('Failed to fetch questions:', error.message);
+      console.error('Failed to fetch questions:', error.message);
     }
-   };
+  };
 
   useEffect(() => {
     fetchQuestions();
@@ -43,11 +40,11 @@ const Questions = () => {
   const currentQuestions = questions.slice(indexOfFirstQuestion, indexOfLastQuestion);
 
   const deleteQuestion = async (id) => {
-    await axios.delete(`http://127.0.0.1:8081/api/v1/quizzes/${id}`, {
-       headers: { Authorization: `Bearer ${accessToken}` },
+    await axios.delete(`http://35.198.240.131:8081/api/v1/quizzes/${id}`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
     });
     fetchQuestions();
-   };
+  };
 
   const navigate = useNavigate();
 
@@ -81,19 +78,27 @@ const Questions = () => {
           </tr>
         </thead>
         <tbody>
-          {currentQuestions.map(({ question, point, image, id }, index) => (
-            <tr>
-              <td> {image}</td>
-              <td> {question.length > 40 ? `${question.slice(0, 40)}...` : question}</td>
-              <td> {point} </td>
+          {currentQuestions.map(({ question, point, imageUrl, id }, index) => (
+            <tr key={id}>
               <td>
-                <i className="info-icon"><AiFillExclamationCircle /></i>
+                <img className="question-image" src={imageUrl} alt={`Question ${index + 1}`} />
+              </td>
+              <td>{question.length > 40 ? `${question.slice(0, 40)}...` : question}</td>
+              <td>{point}</td>
+              <td>
+                <i className="info-icon">
+                  <AiFillExclamationCircle />
+                </i>
               </td>
               <td>
-                <i className="edit-icon"><AiFillEdit /></i>
+                <i className="edit-icon">
+                  <AiFillEdit />
+                </i>
               </td>
               <td>
-                <i className="delete-icon" onClick={() => deleteQuestion(id)}><AiFillDelete /></i>
+                <i className="delete-icon" onClick={() => deleteQuestion(id)}>
+                  <AiFillDelete />
+                </i>
               </td>
             </tr>
           ))}

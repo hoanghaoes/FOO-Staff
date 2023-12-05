@@ -1,45 +1,48 @@
+// AddQuestion.js
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import QuestionApi from "../api/QuizzesApi";
-import useAuth from "../api/useAuth";
-import "./addQuestion.css"
+import "./addQuestion.css";
 
 const AddQuestion = () => {
   const [formData, setFormData] = useState({
-    image: '',
-    question: '',
     locationId: '',
+    question: '',
+    point: '',
     correctAnswer: '',
-    answers: [], // Store answers in an array
+    image: null, // Use null to represent the file
+    description: ''
   });
 
-  const { isAuthenticated, token } = useAuth();
-  const accessToken=localStorage.getItem('accessToken');
-
-  const { image, question, point, locationId,correctAnswer, answers } = formData;
-
+  const accessToken = localStorage.getItem('accessToken');
   const history = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    const { name, value, files } = e.target;
 
-  // Handle changes for answers
-  const handleAnswerChange = (index, value) => {
-    const updatedAnswers = [...answers];
-    updatedAnswers[index] = value;
-    setFormData({ ...formData, answers: updatedAnswers });
+    // If the input is a file input, update the 'image' property with the selected file
+    if (name === 'image') {
+      setFormData({ ...formData, [name]: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const addQuestion = async () => {
     try {
-      // Step 1: Send question data and get the quizzesId
-      const responseQuestion = await fetch('http://127.0.0.1:8081/api/v1/quizzes', {
+      const form = new FormData();
+
+      // Append each form field to the FormData object
+      form.append('locationId', formData.locationId);
+      form.append('question', formData.question);
+      form.append('point', formData.point);
+      form.append('correctAnswer', formData.correctAnswer);
+      form.append('image', formData.image);
+      form.append('description', formData.description);
+
+      const responseQuestion = await fetch('http://35.198.240.131:8081/api/v1/quizzes', {
         method: "POST",
-        body: JSON.stringify(formData),
-        headers: { 
-          "Content-type": "application/json" ,
+        body: form,
+        headers: {
           'Authorization': `Bearer ${accessToken}`
         },
       });
@@ -49,22 +52,7 @@ const AddQuestion = () => {
       }
 
       const { quizzesId } = await responseQuestion.json();
-
-      // Step 2: Send answers to the corresponding quizzesId
-      const responseAnswers = await fetch(`http://127.0.0.1:8081/api/v1/${quizzesId}/answer`, {
-        method: "POST",
-        body: JSON.stringify({ answers }),
-        headers: { 
-          "Content-type": "application/json" ,
-          'Authorization': `Bearer ${accessToken}`,
-        },
-      });
-
-      if (!responseAnswers.ok) {
-        throw new Error('Something went wrong while adding answers');
-      }
-
-      history("/");
+      history(`/add-answer/${quizzesId}`);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -75,55 +63,45 @@ const AddQuestion = () => {
       <div className="add-question">
         <input
           name="locationId"
-          value={locationId}
+          value={formData.locationId}
           onChange={handleChange}
           type="text"
-          placeholder="Location"
+          placeholder="LocationId"
         />
         <input
           name="question"
-          value={question}
+          value={formData.question}
           onChange={handleChange}
           type="text"
           placeholder="Question"
         />
         <input
           name="point"
-          value={point}
+          value={formData.point}
           onChange={handleChange}
-          type="number"
+          type="text"
           placeholder="Point"
         />
         <input
           name="correctAnswer"
-          value={correctAnswer}
+          value={formData.correctAnswer}
           onChange={handleChange}
           type="text"
           placeholder="CorrectAnswer"
         />
         <input
-          name="Image"
-          value={image}
+          name="image"
           onChange={handleChange}
           type="file"
           placeholder="Image"
         />
-        {/* Render answer input fields */}
-        {answers.map((answer, index) => (
-          <input
-            key={index}
-            value={answer}
-            onChange={(e) => handleAnswerChange(index, e.target.value)}
-            type="text"
-            placeholder={`Answer ${index + 1}`}
-          />
-        ))}
-
-        {/* Add a new answer button */}
-        <button onClick={() => setFormData({ ...formData, answers: [...answers, ''] })}>
-          Add Answer
-        </button>
-
+        <input
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          type="text"
+          placeholder="Description"
+        />
         <button onClick={addQuestion} type="submit">
           Add
         </button>
