@@ -26,28 +26,49 @@ const App = () => (
       <Route
         path="/*"
         element={
-          <AppLayout>
-            <Routes>
-              <Route index element={<LoginForm />} />
-              <Route path="/home" element={<HomeScreen/>}></Route>
-              <Route path="/question" element={<Question />} />
-              <Route path="/mystery" element={<Mysterys />} />
-              <Route path="/artifact" element={<Artifact />} />
-              <Route path="/event" element={<Event />} />
-              <Route path="/add-question" element={<AddQuestion />} />
-              <Route path="/add-mystery" element={<AddMystery/>}></Route>
-              <Route path="/add-event" element={<AddEvent />} />
-              <Route path="/question/update-question/:id?" element={<updateQuestion />} />
-              <Route path="/fact/update-fact/:id?" element={<updateQuestion />} />
-              <Route path="/artifact/update-artifact/:id?" element={<updateQuestion />} />
-              <Route path="/event/update-event/:id?" element={<updateQuestion />} />
-            </Routes>
-          </AppLayout>
+          <Routes>
+            {/* Route for LoginForm without AppLayout */}
+            <Route index element={<LoginForm />} />
+
+            {/* Routes with AppLayout (Navbar will be displayed) */}
+            <Route
+              path="/*"
+              element={
+                <AppLayout>
+                  <Routes>
+                    <Route path="/home" element={<HomeScreen />} />
+                    <Route path="/question" element={<Question />} />
+                    <Route path="/mystery" element={<Mysterys />} />
+                    <Route path="/artifact" element={<Artifact />} />
+                    <Route path="/event" element={<Event />} />
+                    <Route path="/add-question" element={<AddQuestion />} />
+                    <Route path="/add-mystery" element={<AddMystery />} />
+                    <Route path="/add-event" element={<AddEvent />} />
+                    <Route
+                      path="/question/update-question/:id?"
+                      element={<updateQuestion />}
+                    />
+                    <Route
+                      path="/fact/update-fact/:id?"
+                      element={<updateQuestion />}
+                    />
+                    <Route
+                      path="/artifact/update-artifact/:id?"
+                      element={<updateQuestion />}
+                    />
+                    <Route
+                      path="/event/update-event/:id?"
+                      element={<updateQuestion />}
+                    />
+                  </Routes>
+                </AppLayout>
+              }
+            />
+          </Routes>
         }
       />
     </Routes>
   </Router>
 );
-
 
 export default App;

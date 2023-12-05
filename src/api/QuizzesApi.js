@@ -1,14 +1,15 @@
 import axios from "axios";
+import useAuth from "./useAuth";
 
-const QuestionApi = {
-    getQuestions: async () => {
-        const yourAccessToken = "eyJhbGciOiJIUzM4NCJ9.eyJ1c2VyIjp7ImlkIjoiMzBhZDhhY2UtOTE5OC0xMWVlLWE2NjUtYzUzZmI0NTY0YjE0IiwidXNlcm5hbWUiOiJhZG1pbiIsImRpc3BsYXlOYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJhbmtpbmdQb2ludCI6MCwiYmFsYW5jZSI6MH0sInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcwMTYwMzEzNCwiZXhwIjoxNzAxNjg5NTM0fQ.rk4Uf7DN6eIXZ01INGL1usRJ6CuMWTHx5gjokeaOfzW3xaYSImrwOzq_G1nq5kqg";
+const QuestionApi = () => {
+    const { isAuthenticated, token } = useAuth();
 
+    const getQuestions = async () => {
         try {
-            const response = await axios.get('http://192.168.88.67:8081/api/v1/quizzes', {
+            const response = await axios.get('http://127.0.0.1:8081/api/v1/quizzes', {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${yourAccessToken}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
 
@@ -17,16 +18,14 @@ const QuestionApi = {
             console.error('Failed to fetch questions:', error.message);
             return [];
         }
-    },
+    };
 
-    addQuestion: async (newQuestion) => {
-        const yourAccessToken = "eyJhbGciOiJIUzM4NCJ9.eyJ1c2VyIjp7ImlkIjoiZmNmMjkyMjgtOTFjZS0xMWVlLTlmNGEtNTUwZjQyZmJmNjlhIiwidXNlcm5hbWUiOiJzdHJpbmciLCJkaXNwbGF5TmFtZSI6InN0cmluZyIsImVtYWlsIjoic3RyaW5nIiwicmFua2luZ1BvaW50IjowLCJiYWxhbmNlIjowfSwic3ViIjoic3RyaW5nIiwiaWF0IjoxNzAxNjAyODc5LCJleHAiOjE3MDE2ODkyNzl9.XHMeJ1SmiTrI0giqHXMp1V7il3l4TD1KqEhOenJ8QRvH4DVKfTY1Xbjm9ftj9ADn";
-
+    const addQuestion = async (newQuestion) => {
         try {
-            const response = await axios.post('http://192.168.88.67:8081/api/v1/quizzes', newQuestion, {
+            const response = await axios.post('http://127.0.0.1:8081/api/v1/quizzes', newQuestion, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${yourAccessToken}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
 
@@ -35,16 +34,14 @@ const QuestionApi = {
             console.error('Failed to add question:', error.message);
             return [];
         }
-    },
+    };
 
-    editQuestion: async (id, updatedQuestion) => {
-        const yourAccessToken = "eyJhbGciOiJIUzM4NCJ9.eyJ1c2VyIjp7ImlkIjoiZmNmMjkyMjgtOTFjZS0xMWVlLTlmNGEtNTUwZjQyZmJmNjlhIiwidXNlcm5hbWUiOiJzdHJpbmciLCJkaXNwbGF5TmFtZSI6InN0cmluZyIsImVtYWlsIjoic3RyaW5nIiwicmFua2luZ1BvaW50IjowLCJiYWxhbmNlIjowfSwic3ViIjoic3RyaW5nIiwiaWF0IjoxNzAxNjAyODc5LCJleHAiOjE3MDE2ODkyNzl9.XHMeJ1SmiTrI0giqHXMp1V7il3l4TD1KqEhOenJ8QRvH4DVKfTY1Xbjm9ftj9ADn";
-
+    const editQuestion = async (id, updatedQuestion) => {
         try {
-            const response = await axios.put(`http://192.168.88.67:8081/api/v1/quizzes/${id}`, updatedQuestion, {
+            const response = await axios.put(`http://127.0.0.1:8081/api/v1/quizzes/${id}`, updatedQuestion, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${yourAccessToken}`,
+                    'Authorization': `Bearer ${token}`,
                 },
             });
 
@@ -53,24 +50,29 @@ const QuestionApi = {
             console.error('Failed to edit question:', error.message);
             return [];
         }
-    },
+    };
 
-    deleteQuestion: async (id) => {
-        const yourAccessToken = "eyJhbGciOiJIUzM4NCJ9.eyJ1c2VyIjp7ImlkIjoiZmNmMjkyMjgtOTFjZS0xMWVlLTlmNGEtNTUwZjQyZmJmNjlhIiwidXNlcm5hbWUiOiJzdHJpbmciLCJkaXNwbGF5TmFtZSI6InN0cmluZyIsImVtYWlsIjoic3RyaW5nIiwicmFua2luZ1BvaW50IjowLCJiYWxhbmNlIjowfSwic3ViIjoic3RyaW5nIiwiaWF0IjoxNzAxNjAyODc5LCJleHAiOjE3MDE2ODkyNzl9.XHMeJ1SmiTrI0giqHXMp1V7il3l4TD1KqEhOenJ8QRvH4DVKfTY1Xbjm9ftj9ADn";
-
+    const deleteQuestion = async (id) => {
         const requestOptions = {
             method: "DELETE",
             headers: {
-                'Authorization': 'Beerer ' + yourAccessToken,
+                'Authorization': `Bearer ${token}`,
             }
         };
 
         try {
-            await axios.delete(`http://192.168.88.67:8081/api/v1/quizzes/${id}`, requestOptions);
+            await axios.delete(`http://127.0.0.1:8081/api/v1/quizzes/${id}`, requestOptions);
         } catch (error) {
             console.error("Error in deleteQuestion: ", error);
         }
-    },
+    };
+
+    return {
+        getQuestions,
+        addQuestion,
+        editQuestion,
+        deleteQuestion,
+    };
 };
 
 export default QuestionApi;

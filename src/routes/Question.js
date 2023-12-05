@@ -11,24 +11,28 @@ import { AiFillFastBackward } from "react-icons/ai";
 import { AiFillFastForward } from "react-icons/ai";
 import { AiFillBackward } from "react-icons/ai";
 import { AiFillForward } from "react-icons/ai";
-import QuestionApi from "../api/QuizzesApi";
+import useAuth from "../api/useAuth";
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [questionsPerPage, setQuestionsPerPage] = useState(15);
+  const { isAuthenticated, token } = useAuth();
+  const accessToken=localStorage.getItem('accessToken');
 
   const fetchQuestions = async () => {
     try {
-      const questions = await QuestionApi.getQuestions();
-      questions.forEach(question => {
-        question.image = question.image.name;
-      });
-      setQuestions(questions);
+       const questions = await axios.get("http://127.0.0.1:8081/api/v1/quizzes", {
+         headers: { Authorization: `Bearer ${accessToken}` },
+       });
+       questions.data.forEach(question => {
+         question.image = question.image.name;
+       });
+       setQuestions(questions.data);
     } catch (error) {
-      console.error('Failed to fetch questions:', error.message);
+       console.error('Failed to fetch questions:', error.message);
     }
-  };
+   };
 
   useEffect(() => {
     fetchQuestions();
@@ -39,9 +43,11 @@ const Questions = () => {
   const currentQuestions = questions.slice(indexOfFirstQuestion, indexOfLastQuestion);
 
   const deleteQuestion = async (id) => {
-    await QuestionApi.deleteQuestion(id);
+    await axios.delete(`http://127.0.0.1:8081/api/v1/quizzes/${id}`, {
+       headers: { Authorization: `Bearer ${accessToken}` },
+    });
     fetchQuestions();
-  };
+   };
 
   const navigate = useNavigate();
 

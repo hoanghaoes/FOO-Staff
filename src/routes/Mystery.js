@@ -14,14 +14,14 @@ const Mystery = () => {
   const [mystery, setMystery] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [MysteryPerPage, setMysteryPerPage] = useState(15);
-  const yourAccessToken = "eyJhbGciOiJIUzM4NCJ9.eyJ1c2VyIjp7ImlkIjoiOWM4MmViMzQtODg3OS0xMWVlLWEyNDgtYjE5Y2RkOTdkM2U3IiwidXNlcm5hbWUiOiJob2FuZ2hhb2VzIiwiZGlzcGxheU5hbWUiOiJIb2FuZyBIYW8iLCJlbWFpbCI6ImhvYW5naGFvZXNAZ21haWwuY29tIn0sInN1YiI6ImhvYW5naGFvZXNAZ21haWwuY29tIiwiaWF0IjoxNzAwNTc2NjYxLCJleHAiOjE3MDA2NjMwNjF9.evRQUKJPrthSSVjmaTSEWu6PeHabImlcojiDkrLyxl3GBrGn1A-OXtyKIEIjeTM1";
+  const accessToken=localStorage.getItem('accessToken');
 
   const fetchMystery = async () => {
     try {
       const response = await fetch("http:/localhost:8081/api/v1/mystery_item", {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${yourAccessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
 
@@ -48,7 +48,7 @@ const Mystery = () => {
     const requestOptions = {
       method: "DELETE",
       headers: {
-        'Authorization': 'Beerer ' + yourAccessToken,
+        Authorization: `Bearer ${accessToken}`,
       }
     };
 
@@ -80,10 +80,13 @@ const Mystery = () => {
           </tr>
         </thead>
         <tbody>
-          {currentMystery.map(({ mystery, id }, index) => (
+          {currentMystery.map(({ name,description,point, locationId, id }, index) => (
             <tr>
               {/* <td> {image.length > 25 ? `${image.slice(0, 25)}...` : image}</td> */}
-              <td> {mystery.length > 40 ? `${mystery.slice(0, 40)}...` : mystery}</td>
+              <td> {name}</td>
+              <td> {locationId}</td>
+              <td> {point}</td>
+              <td> {description}</td>
               <td>
                 <i className="info-icon"><AiFillExclamationCircle /></i>
               </td>

@@ -7,18 +7,18 @@ import { AiFillDelete } from "react-icons/ai";
 const QuestionDetail = ({ match }) => {
  const [question, setQuestion] = useState([]);
  const questionId = match.params.id;
- const yourAccessToken = "eyJhbGciOiJIUzM4NCJ9.eyJ1c2VyIjp7ImlkIjoiMzBhZDhhY2UtOTE5OC0xMWVlLWE2NjUtYzUzZmI0NTY0YjE0IiwidXNlcm5hbWUiOiJhZG1pbiIsImRpc3BsYXlOYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJhbmtpbmdQb2ludCI6MCwiYmFsYW5jZSI6MH0sInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTcwMTU3OTM3NCwiZXhwIjoxNzAxNjY1Nzc0fQ.8FC-xIixknbl7A0gDXepLlkh4Ys1Bp8GSqX6LKy7ZeksbNwDe0EVsVxSG98YMGuN";
+ const accessToken=localStorage.getItem('accessToken');
 
  useEffect(() => {
     fetchQuestion();
  }, []);
 
- const fetchQuestion = async () => {
+ const fetchQuestion = async (id) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8081/api/v1/quizzes/${questionId}`, {
+      const response = await axios.get(`http://127.0.0.1:8081/api/v1/quizzes/${id}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${yourAccessToken}`,
+          'Authorization': `Bearer ${accessToken}`,
         },
       });
 
@@ -33,7 +33,7 @@ const QuestionDetail = ({ match }) => {
     const requestOptions = {
       method: "DELETE",
       headers: {
-        'Authorization': 'Beerer ' + yourAccessToken,
+        'Authorization': `Bearer ${accessToken}`,
       }
     };
 

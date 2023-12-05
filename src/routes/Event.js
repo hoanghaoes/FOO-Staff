@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Event.css";
+import useEventApi from "../api/EventApi";
+import useAuth from "../api/useAuth";
 import { AiFillEdit } from "react-icons/ai";
 import { AiFillDelete } from "react-icons/ai";
 import { AiFillExclamationCircle } from "react-icons/ai";
@@ -15,14 +17,15 @@ const Event = () => {
  const [event, setEvent] = useState([]);
  const [currentPage, setCurrentPage] = useState(1);
  const [EventPerPage, setEventPerPage] = useState(15);
- const yourAccessToken = "eyJhbGciOiJIUzM4NCJ9.eyJ1c2VyIjp7ImlkIjoiOWM4MmViMzQtODg3OS0xMWVlLWEyNDgtYjE5Y2RkOTdkM2U3IiwidXNlcm5hbWUiOiJob2FuZ2hhb2VzIiwiZGlzcGxheU5hbWUiOiJIb2FuZyBIYW8iLCJlbWFpbCI6ImhvYW5naGFvZXNAZ21haWwuY29tIn0sInN1YiI6ImhvYW5naGFvZXNAZ21haWwuY29tIiwiaWF0IjoxNzAwNTc2NjYxLCJleHAiOjE3MDA2NjMwNjF9.evRQUKJPrthSSVjmaTSEWu6PeHabImlcojiDkrLyxl3GBrGn1A-OXtyKIEIjeTM1";
+ const { isAuthenticated, token } = useAuth();
+ const accessToken=localStorage.getItem('accessToken');
 
  const fetchEvent = async () => {
   try {
-     const response = await fetch("localhost:8081/api/v1/event", {
+     const response = await fetch("http://127.0.0.1:8081/api/v1/events", {
        method: 'GET',
        headers: {
-         'Authorization': `Bearer ${yourAccessToken}`,
+         'Authorization': `Bearer ${accessToken}`,
        },
      });
  
@@ -49,12 +52,12 @@ const Event = () => {
   const requestOptions = {
      method: "DELETE",
      headers: {
-       'Authorization': 'Beerer ' + yourAccessToken,
+       'Authorization': `Bearer ${accessToken}`,
      }
   };
  
   try {
-     await fetch(`localhost:8081/api/v1/quizzes/${id}`, requestOptions);
+     await fetch(`http://127.0.0.1:8081/api/v1/events/${id}`, requestOptions);
      fetchEvent();
   } catch (error) {
      console.error("Error in deleteQuestion: ", error);
@@ -76,7 +79,7 @@ const Event = () => {
           <tr>
             <th className="event-column">Event</th>
             <th className="time-column">Time</th>
-            <th className="location-column">Location</th>
+            <th className="location-column">Adress</th>
             <th className="poster-column">Image</th>
             <th className="action-column"></th>
             <th className="action-column"></th>
@@ -84,11 +87,12 @@ const Event = () => {
           </tr>
         </thead>
         <tbody>
-          {currentEvent.map(({ event,image, time,  id }, index) => (
+          {currentEvent.map(({ eventName,image, time,adress,  id }, index) => (
             <tr>
-              <td> {event.length > 40 ? `${event.slice(0, 40)}...` : event}</td>
-              <td> {image.length > 25 ? `${image.slice(0, 25)}...` : image}</td>
+              <td> {eventName}</td>
+              {/* <td> {image}</td> */}
               <td>{time}</td>
+              <td>{adress}</td>
               <td>
                 <i className="info-icon"><AiFillExclamationCircle /></i>
               </td>
