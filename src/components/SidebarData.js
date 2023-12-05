@@ -15,9 +15,15 @@ export const SidebarData = [
  {
     title: "Mystery",
     path: "/mystery",
-    icon: <AiIcons.AiFillCheckCircle />,
+    icon: <AiIcons.AiFillSecurityScan/>,
     cName: "nav-text",
  },
+ {
+   title: "Location",
+   path: "/artifact",
+   icon: <FaIcons.FaLocationArrow />,
+   cName: "nav-text",
+},
  {
     title: "Artifact",
     path: "/artifact",
@@ -25,11 +31,18 @@ export const SidebarData = [
     cName: "nav-text",
  },
  {
+   title: "Fact",
+   path: "/fact",
+   icon: <AiIcons.AiFillCheckCircle />,
+   cName: "nav-text",
+},
+ {
     title: "Event",
     path: "/event",
     icon: <IoIcons.IoIosCalendar />,
     cName: "nav-text",
  },
+
  {
     title: "Log out",
     path: "/",
