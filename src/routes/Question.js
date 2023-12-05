@@ -4,15 +4,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Question.css";
 import { AiFillEdit, AiFillDelete, AiFillExclamationCircle, AiFillFileAdd, AiFillFastBackward, AiFillFastForward, AiFillBackward, AiFillForward } from "react-icons/ai";
-import useAuth from "../api/useAuth";
-import QuestionDetail from "./QuestionDetail";
 import UpdateQuestion from "./updateQuestion";
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [questionsPerPage, setQuestionsPerPage] = useState(15);
-  const { isAuthenticated, token } = useAuth();
   const accessToken = localStorage.getItem('accessToken');
   const navigate = useNavigate();
 
