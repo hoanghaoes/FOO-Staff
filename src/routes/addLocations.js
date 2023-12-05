@@ -1,16 +1,17 @@
-// AddMystery.js
+// AddLocation.js
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import "./addMystery.css";
+import "./addLocation.css";
 
-const AddMystery = () => {
+const AddLocation = () => {
   const [formData, setFormData] = useState({
     name: '',
-    locationId: '',
-    point: '',
-    foundImage: null,
-    unfoundedimage: null, // Use null to represent the file
-    description: ''
+    nameInMap: '',
+    latitude: '',
+    longitude: '',
+    image: null, // Use null to represent the file
+    description: '',
+    fact: ''
   });
 
   const accessToken = localStorage.getItem('accessToken');
@@ -27,19 +28,20 @@ const AddMystery = () => {
     }
   };
 
-  const addMystery = async () => {
+  const addLocation = async () => {
     try {
       const form = new FormData();
 
       // Append each form field to the FormData object
       form.append('name', formData.name);
-      form.append('locationId', formData.locationId);
-      form.append('point', formData.point);
-      form.append('foundImage', formData.foundImage);
-      form.append('unfoundedImage', formData.unfoundedImage);
-      form.append('description', formData.description)
+      form.append('nameInMap', formData.nameInMap);
+      form.append('latitude', formData.latitude);
+      form.append('longitude', formData.longitude);
+      form.append('image', formData.image);
+      form.append('description', formData.description);
+      form.append('fact', formData.fact)
 
-      const responseMystery = await fetch('http://35.198.240.131:8081/api/v1/locations', {
+      const responseLocation = await fetch('http://35.198.240.131:8081/api/v1/locations', {
         method: "POST",
         body: form,
         headers: {
@@ -47,11 +49,11 @@ const AddMystery = () => {
         },
       });
 
-      if (!responseMystery.ok) {
+      if (!responseLocation.ok) {
         throw new Error('Something went wrong');
       }
 
-      const { locationId } = await responseMystery.json();
+      const { locationId } = await responseLocation.json();
       history(`/add-artifact/${locationId}`);
     } catch (error) {
       console.error('Error:', error);
@@ -69,34 +71,31 @@ const AddMystery = () => {
           placeholder="Name"
         />
         <input
-          name="locationId"
-          value={formData.locationId}
+          name="nameInMap"
+          value={formData.nameInMap}
           onChange={handleChange}
           type="text"
-          placeholder="LocationId"
+          placeholder="Địa chỉ"
         />
         <input
-          name="point"
-          value={formData.point}
+          name="latitude"
+          value={formData.latitude}
           onChange={handleChange}
           type="text"
-          placeholder="Point"
+          placeholder="Latitude"
         />
-        <li>FoundImage</li>
         <input
-          name="foundImage"
-          value={formData.foundImage}
+          name="longitude"
+          value={formData.longitude}
+          onChange={handleChange}
+          type="text"
+          placeholder="Longitude"
+        />
+        <input
+          name="image"
           onChange={handleChange}
           type="file"
-          placeholder="Tìm thấy"
-        />
-        <li>UnfoundedImage</li>
-        <input
-          name="unfoundedImage"
-          value={formData.unfoundedimage}
-          onChange={handleChange}
-          type="file"
-          placeholder="Không tìm thấy"
+          placeholder="Image"
         />
         <input
           name="description"
@@ -104,8 +103,15 @@ const AddMystery = () => {
           onChange={handleChange}
           type="text"
           placeholder="Description"
+        />
+        <input
+          name="fact"
+          value={formData.fact}
+          onChange={handleChange}
+          type="text"
+          placeholder="Fact"
         />        
-        <button onClick={addMystery} type="submit">
+        <button onClick={addLocation} type="submit">
           Add
         </button>
       </div>
@@ -113,4 +119,4 @@ const AddMystery = () => {
   );
 };
 
-export default AddMystery;
+export default AddLocation;

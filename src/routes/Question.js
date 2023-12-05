@@ -5,6 +5,8 @@ import axios from "axios";
 import "./Question.css";
 import { AiFillEdit, AiFillDelete, AiFillExclamationCircle, AiFillFileAdd, AiFillFastBackward, AiFillFastForward, AiFillBackward, AiFillForward } from "react-icons/ai";
 import useAuth from "../api/useAuth";
+import QuestionDetail from "./QuestionDetail";
+import UpdateQuestion from "./updateQuestion";
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
@@ -12,6 +14,7 @@ const Questions = () => {
   const [questionsPerPage, setQuestionsPerPage] = useState(15);
   const { isAuthenticated, token } = useAuth();
   const accessToken = localStorage.getItem('accessToken');
+  const navigate = useNavigate();
 
   const fetchQuestions = async () => {
     try {
@@ -46,7 +49,15 @@ const Questions = () => {
     fetchQuestions();
   };
 
-  const navigate = useNavigate();
+  const handleInfoClick = (id) => {
+    // Navigate to QuestionDetail component
+    navigate(`/question-detail/${id}`);
+  };
+
+  const handleEditClick = (id) => {
+    // Navigate to UpdateQuestion component
+    navigate(`/update-question/${id}`);
+  };
 
   const paginate = (pageNumber) => {
     const totalPages = Math.ceil(questions.length / questionsPerPage);
@@ -83,15 +94,15 @@ const Questions = () => {
               <td>
                 <img className="question-image" src={imageUrl} alt={`Question ${index + 1}`} />
               </td>
-              <td>{question.length > 40 ? `${question.slice(0, 40)}...` : question}</td>
+              <td>{question}</td>
               <td>{point}</td>
               <td>
-                <i className="info-icon">
+                <i className="info-icon" onClick={() => handleInfoClick(id)}>
                   <AiFillExclamationCircle />
                 </i>
               </td>
               <td>
-                <i className="edit-icon">
+                <i className="edit-icon" onClick={() => handleEditClick(id)}>
                   <AiFillEdit />
                 </i>
               </td>

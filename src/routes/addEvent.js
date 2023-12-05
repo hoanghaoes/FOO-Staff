@@ -1,74 +1,96 @@
+// AddEvent.js
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom' ;
-import "./addEvent.css"
+import { useNavigate } from 'react-router-dom';
+import "./addEvent.css";
 
 const AddEvent = () => {
- const [formData, setFormData] = useState({
-    Event: '',
-    Time: '',
-    locationId: '',
- });
+  const [formData, setFormData] = useState({
+    eventName: '',
+    time: '',
+    address: '',
+    image: null // Use null to represent the file
+  });
 
- const { Event,Time, locationId } = formData;
+  const accessToken = localStorage.getItem('accessToken');
+  const history = useNavigate();
 
- const history = useNavigate();
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
 
- const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
- };
+    // If the input is a file input, update the 'image' property with the selected file
+    if (name === 'image') {
+      setFormData({ ...formData, [name]: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
 
- const AddEvent = async () => {
+  const addEvent = async () => {
     try {
-      const response = await fetch('https://65588cefe93ca47020a9706c.mockapi.io/api/facts/Fact', {
+      const form = new FormData();
+
+      // Append each form field to the FormData object
+      form.append('eventName', formData.eventName);
+      form.append('time', formData.time);
+      form.append('address', formData.address);
+      form.append('image', formData.image);
+
+      const responseEvent = await fetch('http://35.198.240.131:8081/api/v1/events', {
         method: "POST",
-        body: JSON.stringify(formData),
+        body: form,
         headers: {
-            "Content-type": "application/json" ,
-            "Authorization": ""
+          'Authorization': `Bearer ${accessToken}`
         },
       });
 
-      if (!response.ok) {
+      if (!responseEvent.ok) {
         throw new Error('Something went wrong');
       }
 
-      history("/");
+      const { eventsId } = await responseEvent.json();
+      history(`/add-answer/${eventsId}`);
     } catch (error) {
       console.error('Error:', error);
     }
- };
+  };
 
- return (
+  return (
     <div className="js-container">
-      <div className="add-Event">
+      <div className="add-event">
         <input
-          name="Event"
-          value={Event}
+          name="eventName"
+          value={formData.eventName}
           onChange={handleChange}
           type="text"
-          placeholder="Event"
+          placeholder="Tên sự kiện"
         />
         <input
-          name="Time"
-          value={Time}
-          onChange={handleChange}
-          type="time"
-          placeholder="Time"
-        />
-        <input
-          name="locationId"
-          value={locationId}
+          name="time"
+          value={formData.time}
           onChange={handleChange}
           type="text"
-          placeholder="Location"
+          placeholder="Thời gian"
         />
-        <button onClick={AddEvent} type="submit">
+        <input
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+          type="text"
+          placeholder="Địa chỉ"
+        />
+        <input
+          name="image"
+          value={formData.image}
+          onChange={handleChange}
+          type="file"
+          placeholder="Image"
+        />
+        <button onClick={addEvent} type="submit">
           Add
         </button>
       </div>
     </div>
- );
+  );
 };
 
 export default AddEvent;

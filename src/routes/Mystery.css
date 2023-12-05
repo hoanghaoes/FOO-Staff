@@ -84,8 +84,22 @@
     border-bottom: 1px solid #ddd;
 }
 
-.mystery-column {
-    width: 91%;
+.image-column {
+    width: 12%;
+}
+
+.name-column {
+    width: 15%;
+}
+.locationId-column {
+    width: 16%;
+}
+.point-column {
+    width: 6%;
+}
+
+.des-column {
+    width: 45%;
 }
 
 .action-column {

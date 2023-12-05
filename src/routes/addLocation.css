@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.add-mystery {
+.add-location {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -11,7 +11,7 @@ body {
     
 }
 
-.add-mystery input {
+.add-location input {
     border: none;
     border-radius: 20px;
     margin-bottom: 10px;
@@ -23,7 +23,7 @@ body {
     -webkit-backdrop-filter: blur(6.7px);    
 }
 
-.add-mystery button {
+.add-location button {
     padding: 8px;
     font-size: 16px;
     background-color: #A6CF98;
@@ -33,6 +33,6 @@ body {
     border-radius: 20px;
 }
 
-.add-mystery button:hover {
+.add-location button:hover {
     background-color: #557C55;
 }

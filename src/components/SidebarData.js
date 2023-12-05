@@ -20,7 +20,7 @@ export const SidebarData = [
  },
  {
    title: "Location",
-   path: "/artifact",
+   path: "/locations",
    icon: <FaIcons.FaLocationArrow />,
    cName: "nav-text",
 },

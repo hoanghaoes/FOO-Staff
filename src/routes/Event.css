@@ -1,35 +1,49 @@
-.event-map {
+.events-map {
     padding: 20px;
 }
 
 .add-button {
-    background-color: #28a745;
-    color: white;
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
     border: none;
-    border-radius: 5%;
+    border-radius: 50px;
     padding: 10px 15px;
     cursor: pointer;
     margin-bottom: 20px;
     margin-left: 93%;
 }
 
-.event-table {
-    width: 80%;
-    border-collapse: collapse;
+.add-button:hover {
+    transform: scale(1.2);
 }
 
-.event-table th, .event-table td {
-    border: 1px solid #ddd;
+.events-table {
+    width: 80%;
+    border-collapse: collapse;
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.33);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+}
+
+.events-table th,
+.events-table td {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    ;
+
     padding: 8px;
     text-align: left;
     height: 37px;
+
 }
 
-.event-table th {
-    background-color: #f2f2f2;
-}
+/* .events-table th {
+    border-bottom: 1px solid rgba( 255, 255, 255, 0.18 );;
+} */
 
-.info-icon, .edit-icon, .delete-icon {
+.info-icon,
+.edit-icon,
+.delete-icon {
     cursor: pointer;
     margin: 10px;
 }
@@ -48,19 +62,22 @@
     margin: 0 5px;
 }
 
-/* .active {
-background-color: #28a745;
-color: white;
-padding: 5px 10px;
-} */
+.active {
+    background: rgba(134, 167, 137, 0.63);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6.7px);
+    -webkit-backdrop-filter: blur(6.7px);
+    color: white;
+    padding: 5px 10px;
+}
 
-.event-table {
+.events-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.event-column,
-.time-column,
+.image-column,
+.events-column,
 .action-column {
     padding: 12px;
     text-align: left;
@@ -68,13 +85,40 @@ padding: 5px 10px;
 }
 
 .event-column {
-    width: 81%;
+    width: 15%;
 }
 
 .time-column {
-    width: 10%;
+    width: 16%;
+}
+
+.address-column {
+    width: 30%;
+}
+
+.image-column {
+    width: 30%;
 }
 
 .action-column {
     width: 3%;
 }
+
+/* .event-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+   
+.event-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+} */

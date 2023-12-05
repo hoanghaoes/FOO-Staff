@@ -85,11 +85,15 @@
 }
 
 .image-column {
-    width: 15%;
+    width: 30%;
 }
 
 .questions-column {
-    width: 76%;
+    width: 53%;
+}
+
+.point-column {
+    width: 8%;
 }
 
 .action-column {
