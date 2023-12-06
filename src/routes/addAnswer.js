@@ -23,7 +23,7 @@ const AddAnswer = ({ quizzesId }) => {
                 throw new Error('Error adding answers');
             }
 
-            history(`/add-answer/${quizId}`);
+            history(`/add-answer`);
         } catch (error) {
             console.error('Error:', error);
         }

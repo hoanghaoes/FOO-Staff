@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Question.css";
 import { AiFillEdit, AiFillDelete, AiOutlineCopy, AiFillExclamationCircle, AiFillFileAdd, AiFillFastBackward, AiFillFastForward, AiFillBackward, AiFillForward } from "react-icons/ai";
-import UpdateQuestion from "./updateQuestion";
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
@@ -58,10 +57,9 @@ const Questions = () => {
     fetchQuestions();
   };
 
-  const handleDeleteClick = (id) => {
-    // Navigate to QuestionDetail component
-    navigate(`/update-question/${id}`);
-  };
+  // const handleDeleteClick = (id) => {
+
+  // };
 
   const handleEditClick = (id) => {
     // Navigate to UpdateQuestion component
