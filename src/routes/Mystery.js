@@ -1,16 +1,14 @@
-// Import thêm một số thư viện và icon cần thiết
 import React, { useState, useEffect } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Mystery.css";
-import { AiFillEdit } from "react-icons/ai";
-import { AiFillDelete } from "react-icons/ai";
-import { AiFillExclamationCircle, AiFillFileAdd, AiFillFastBackward, AiFillFastForward, AiFillBackward, AiFillForward } from "react-icons/ai";
+import { AiFillEdit, AiFillDelete, AiFillFileAdd, AiFillFastBackward, AiFillFastForward, AiFillBackward, AiFillForward } from "react-icons/ai";
 
 const Mystery = () => {
   const [mystery, setMystery] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [MysteryPerPage, setMysteryPerPage] = useState(15);
+  const [mysteryPerPage, setMysteryPerPage] = useState(15);
   const accessToken = localStorage.getItem('accessToken');
+  const navigate = useNavigate();
 
   const fetchMystery = async () => {
     try {
@@ -27,11 +25,15 @@ const Mystery = () => {
 
       const mysteryData = await response.json();
 
-      // Convert binary image data to data URL
-      const updatedMystery = mysteryData.map(m => ({
-        ...m,
-        imageUrl: m.image ? URL.createObjectURL(new Blob([Uint8Array.from(atob(m.image), c => c.charCodeAt(0))], { type: 'image/jpeg' })) : null,
-      }));
+      // Convert binary image data to data URL and revoke existing URLs
+      const updatedMystery = mysteryData.map(m => {
+        if (m.foundImage) {
+          const foundImageUrl = `data:${m.foundImage.contentType};base64,${m.foundImage.data}`;
+          const unfoundImageUrl = `data:${m.unfoundedImage.contentType};base64,${m.unfoundedImage.data}`;
+          return { ...m, foundImageUrl, unfoundImageUrl };
+        }
+        return m;
+      });
 
       setMystery(updatedMystery);
     } catch (error) {
@@ -41,10 +43,18 @@ const Mystery = () => {
 
   useEffect(() => {
     fetchMystery();
+
+    // Cleanup function
+    return () => {
+      mystery.forEach(m => {
+        m.foundImageUrl && URL.revokeObjectURL(m.foundImageUrl);
+        m.unfoundImageUrl && URL.revokeObjectURL(m.unfoundImageUrl);
+      });
+    };
   }, []);
 
-  const indexOfLastMystery = currentPage * MysteryPerPage;
-  const indexOfFirstMystery = indexOfLastMystery - MysteryPerPage;
+  const indexOfLastMystery = currentPage * mysteryPerPage;
+  const indexOfFirstMystery = indexOfLastMystery - mysteryPerPage;
   const currentMystery = mystery.slice(indexOfFirstMystery, indexOfLastMystery);
 
   const deleteMystery = async (id) => {
@@ -59,16 +69,14 @@ const Mystery = () => {
       await fetch(`http://35.198.240.131:8081/api/v1/mystery_item/${id}`, requestOptions);
       fetchMystery();
     } catch (error) {
-      console.error("Error in deleteQuestion: ", error);
+      console.error("Error in deleteMystery: ", error);
     }
   };
 
   const paginate = (pageNumber) => {
-    const totalPages = Math.ceil(mystery.length / MysteryPerPage);
+    const totalPages = Math.ceil(mystery.length / mysteryPerPage);
     setCurrentPage(Math.max(1, Math.min(pageNumber, totalPages)));
   };
-
-  const navigate = useNavigate();
 
   return (
     <div className="mystery-map">
@@ -76,7 +84,8 @@ const Mystery = () => {
       <table className="mystery-table">
         <thead>
           <tr>
-            <th className="image-column">Image</th>
+            <th className="mystery-column">Found Image</th>
+            <th className="mystery-column">Unfounded Image</th>
             <th className="name-column">Name</th>
             <th className="locationId-column">Location ID</th>
             <th className="point-column">Point</th>
@@ -86,14 +95,27 @@ const Mystery = () => {
           </tr>
         </thead>
         <tbody>
-          {currentMystery.map(({ imageUrl, name, description, point, locationId, id }, index) => (
+          {currentMystery.map(({ foundImageUrl, unfoundImageUrl, name, description, point, locationId, id }, index) => (
             <tr key={id}>
               <td>
-                {imageUrl && (
+                {foundImageUrl && (
                   <img
                     className="mystery-image"
-                    src={imageUrl}
-                    alt={`Mystery ${index + 1}`}
+                    src={foundImageUrl}
+                    alt={`Found Image ${index + 1}`}
+                    width={"100px"}
+                    height={"auto"}
+                  />
+                )}
+              </td>
+              <td>
+                {unfoundImageUrl && (
+                  <img
+                    className="mystery-image"
+                    src={unfoundImageUrl}
+                    alt={`Unfounded Image ${index + 1}`}
+                    width={"100px"}
+                    height={"auto"}
                   />
                 )}
               </td>
@@ -109,9 +131,10 @@ const Mystery = () => {
               </td>
             </tr>
           ))}
-          {MysteryPerPage > currentMystery.length && (
-            Array.from({ length: MysteryPerPage - currentMystery.length }, (_, index) => (
+          {mysteryPerPage > currentMystery.length && (
+            Array.from({ length: mysteryPerPage - currentMystery.length }, (_, index) => (
               <tr key={`empty-${index}`}>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -130,7 +153,7 @@ const Mystery = () => {
           <span className="first-last" onClick={() => paginate(currentPage - 1)}><AiFillBackward /></span>
           <span className="active">{currentPage}</span>
           <span className="first-last" onClick={() => paginate(currentPage + 1)}><AiFillForward /></span>
-          <span className="first-last" onClick={() => paginate(Math.ceil(mystery.length / MysteryPerPage))}><AiFillFastForward /></span>
+          <span className="first-last" onClick={() => paginate(Math.ceil(mystery.length / mysteryPerPage))}><AiFillFastForward /></span>
         </div>
       </div>
     </div>

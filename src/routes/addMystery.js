@@ -52,7 +52,7 @@ const AddMystery = () => {
       }
 
       const { locationId } = await responseMystery.json();
-      history(`/add-artifact/${locationId}`);
+      history(`/mystery`);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -60,7 +60,7 @@ const AddMystery = () => {
 
   return (
     <div className="js-container">
-      <div className="add-location">
+      <div className="add-mystery">
         <input
           name="name"
           value={formData.name}
@@ -88,7 +88,7 @@ const AddMystery = () => {
           value={formData.foundImage}
           onChange={handleChange}
           type="file"
-          placeholder="Tìm thấy"
+          placeholder="Found"
         />
         <li>UnfoundedImage</li>
         <input
@@ -96,7 +96,7 @@ const AddMystery = () => {
           value={formData.unfoundedimage}
           onChange={handleChange}
           type="file"
-          placeholder="Không tìm thấy"
+          placeholder="UnFound"
         />
         <input
           name="description"

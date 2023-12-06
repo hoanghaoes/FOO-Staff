@@ -8,8 +8,7 @@
     border-radius: 50px;
     padding: 10px 15px;
     cursor: pointer;
-    margin-bottom: 20px;
-    margin-left: 93%;
+    width: 123px;
 }
 
 .add-button:hover {
@@ -23,7 +22,8 @@
     background: rgba(255, 255, 255, 0.33);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-
+    backdrop-filter: blur(10px);
+    z-index: 2;
 }
 
 .questions-table th,
@@ -84,12 +84,16 @@
     border-bottom: 1px solid #ddd;
 }
 
+.id-column {
+    width: 2%;
+}
+
 .image-column {
     width: 15%;
 }
 
 .questions-column {
-    width: 12%;
+    width: 5%;
 }
 
 .point-column {
@@ -97,11 +101,11 @@
 }
 
 .correctAns-column {
-    width: 12%;
+    width: 8%;
 }
 
 .answer-column {
-    width: 10%;
+    width: 16%;
 }
 
 .des-column {

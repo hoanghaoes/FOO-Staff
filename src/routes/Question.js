@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Question.css";
-import { AiFillEdit, AiFillDelete, AiFillExclamationCircle, AiFillFileAdd, AiFillFastBackward, AiFillFastForward, AiFillBackward, AiFillForward } from "react-icons/ai";
+import { AiFillEdit, AiFillDelete, AiOutlineCopy, AiFillExclamationCircle, AiFillFileAdd, AiFillFastBackward, AiFillFastForward, AiFillBackward, AiFillForward } from "react-icons/ai";
 import UpdateQuestion from "./updateQuestion";
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [questionsPerPage, setQuestionsPerPage] = useState(15);
+  const [questionsPerPage, setQuestionsPerPage] = useState(5);
   const accessToken = localStorage.getItem('accessToken');
   const navigate = useNavigate();
 
@@ -20,8 +19,7 @@ const Questions = () => {
       });
 
       const updatedQuestions = questionsResponse.data.map((question) => {
-        const imageBlob = new Blob([question.image.data], { type: question.image.contentType });
-        const imageUrl = URL.createObjectURL(imageBlob);
+        const imageUrl = `data:${question.image.contentType};base64,${question.image.data}`;
         return { ...question, imageUrl };
       });
 
@@ -33,7 +31,21 @@ const Questions = () => {
 
   useEffect(() => {
     fetchQuestions();
+
+    // Cleanup function
+    return () => {
+      questions.forEach(q => q.imageUrl && URL.revokeObjectURL(q.imageUrl));
+    };
   }, []);
+
+  const copyToClipboard = (text) => {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+  };
 
   const indexOfLastQuestion = currentPage * questionsPerPage;
   const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
@@ -46,9 +58,9 @@ const Questions = () => {
     fetchQuestions();
   };
 
-  const handleInfoClick = (id) => {
+  const handleDeleteClick = (id) => {
     // Navigate to QuestionDetail component
-    navigate(`/question-detail/${id}`);
+    navigate(`/update-question/${id}`);
   };
 
   const handleEditClick = (id) => {
@@ -70,13 +82,23 @@ const Questions = () => {
           className="add-button"
           onClick={() => navigate('/add-question')}
         >
-          <span>Add</span>
+          Add
+          <AiFillFileAdd className="add-icon" />
+        </button>
+      </Link>
+      <Link to={"/add-answer"}>
+        <button
+          className="add-button"
+          onClick={() => navigate('/add-answer')}
+        >
+          Add Answer
           <AiFillFileAdd className="add-icon" />
         </button>
       </Link>
       <table className="questions-table">
         <thead>
           <tr>
+            <th className="id-column">ID</th>
             <th className="image-column">Image</th>
             <th className="questions-column">Questions</th>
             <th className="point-column">Point</th>
@@ -88,32 +110,57 @@ const Questions = () => {
           </tr>
         </thead>
         <tbody>
-          {currentQuestions.map(({ question, point, correctAnswer, imageUrl,answer,description, id }, index) => (
-            <tr key={id}>
-              <td>
-                <img className="question-image" src={imageUrl} alt={`Question ${index + 1}`} />
-              </td>
-              <td>{question}</td>
-              <td>{point}</td>
-              <td>{correctAnswer}</td>
-              <td>{answer}</td>
-              <td>{description}</td>
-              <td>
-                <i className="edit-icon" onClick={() => handleEditClick(id)}>
-                  <AiFillEdit />
-                </i>
-              </td>
-              <td>
-                <i className="delete-icon" onClick={() => deleteQuestion(id)}>
-                  <AiFillDelete />
-                </i>
-              </td>
-            </tr>
+          {currentQuestions.map(({ id, question, point, correctAnswer, answers, imageUrl, description }, index) => (
+            <React.Fragment key={id}>
+              <tr>
+                <td>
+                  <span
+                    className="copy-icon"
+                    onClick={() => copyToClipboard(id)}
+                  >
+                    <AiOutlineCopy />
+                  </span>
+                </td>
+                <td>
+                  {imageUrl && (
+                    <img
+                      className="question-image"
+                      src={imageUrl}
+                      alt={`Question ${index + 1}`}
+                      width={"150px"}
+                      height={"auto"}
+                    />
+                  )}
+                </td>
+                <td>{question}</td>
+                <td>{point}</td>
+                <td>{correctAnswer}</td>
+                <td>
+                  <ul>
+                    {answers.map(({ id: answerId, quizzessId, answer }) => (
+                      <li key={answerId}>{answer}</li>
+                    ))}
+                  </ul>
+                </td>
+                <td>{description}</td>
+                <td>
+                  <i className="edit-icon" onClick={() => handleEditClick(id)}>
+                    <AiFillEdit />
+                  </i>
+                </td>
+                <td>
+                  <i className="delete-icon" onClick={() => deleteQuestion(id)}>
+                    <AiFillDelete />
+                  </i>
+                </td>
+              </tr>
+              {index < currentQuestions.length - 1 && <tr key={`separator-${id}`}><td colSpan="8"></td></tr>}
+            </React.Fragment>
           ))}
           {emptyRows > 0 && (
             Array.from({ length: emptyRows }, (_, index) => (
               <tr key={`empty-${index}`}>
-                <td colSpan="7"></td>
+                <td colSpan="8"></td>
               </tr>
             ))
           )}

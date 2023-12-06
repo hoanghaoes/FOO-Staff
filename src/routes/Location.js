@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Location.css";
-import { AiFillEdit, AiFillDelete, AiFillExclamationCircle, AiFillFileAdd, AiFillFastBackward, AiFillFastForward, AiFillBackward, AiFillForward } from "react-icons/ai";
-import useAuth from "../api/useAuth";
-import AddLocation from "./addLocations";
-// import LocationDetail from "./QuestionDetail";
-// import UpdateLocation from "./updateQuestion";
+import { AiFillEdit, AiFillDelete, AiFillExclamationCircle, AiFillFileAdd, AiFillFastBackward, AiFillFastForward, AiFillBackward, AiFillForward, AiOutlineCopy } from "react-icons/ai";
 
 const Locations = () => {
     const [locations, setLocations] = useState([]);
@@ -23,8 +18,7 @@ const Locations = () => {
             });
 
             const updatedLocations = locationsResponse.data.map((location) => {
-                const imageBlob = new Blob([location.image.data], { type: location.image.contentType });
-                const imageUrl = URL.createObjectURL(imageBlob);
+                const imageUrl = `data:${location.image.contentType};base64,${location.image.data}`;
                 return { ...location, imageUrl };
             });
 
@@ -38,6 +32,15 @@ const Locations = () => {
         fetchLocations();
     }, []);
 
+    const copyToClipboard = (text) => {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+    };
+
     const indexOfLastQuestion = currentPage * locationsPerPage;
     const indexOfFirstQuestion = indexOfLastQuestion - locationsPerPage;
     const currentLocations = locations.slice(indexOfFirstQuestion, indexOfLastQuestion);
@@ -49,13 +52,7 @@ const Locations = () => {
         fetchLocations();
     };
 
-    const handleInfoClick = (id) => {
-        // Navigate to QuestionDetail component
-        navigate(`/location-detail/${id}`);
-    };
-
     const handleEditClick = (id) => {
-        // Navigate to UpdateQuestion component
         navigate(`/update-location/${id}`);
     };
 
@@ -82,13 +79,14 @@ const Locations = () => {
                     <tr>
                         <th className="name-column">Name</th>
                         <th className="namemap-column">Name in map</th>
+                        <th className="id-column">ID
+                        </th>
                         <th className="lati-column">Latitude</th>
                         <th className="longti-column">Longitude</th>
                         <th className="image-column">Image</th>
                         <th className="des-column">Description</th>
                         <th className="artifact-column">Artifact</th>
                         <th className="fact-column">Fact</th>
-                        <th className="action-column"></th>
                         <th className="action-column"></th>
                         <th className="action-column"></th>
                     </tr>
@@ -98,19 +96,34 @@ const Locations = () => {
                         <tr key={id}>
                             <td>{name}</td>
                             <td>{nameInMap}</td>
+                            <td>
+                                <span
+                                    className="copy-icon"
+                                    onClick={() => copyToClipboard(id)}
+                                >
+                                    <AiOutlineCopy />
+                                </span>
+                            </td>
                             <td>{latitude}</td>
                             <td>{longitude}</td>
                             <td>
-                                <img className="location-image" src={imageUrl} alt={`Question ${index + 1}`} />
+                                <img
+                                    className="location-image"
+                                    src={imageUrl}
+                                    alt={`Location ${index + 1}`}
+                                    width={"150px"}
+                                    height={"auto"}
+                                />
                             </td>
                             <td>{description}</td>
-                            <td>{artifact}</td>
-                            <td>{fact}</td>
                             <td>
-                                <i className="info-icon" onClick={() => handleInfoClick(id)}>
-                                    <AiFillExclamationCircle />
-                                </i>
+                                {/* <ul>
+                                    {artifact.map(({ id: name }) => (
+                                        <li key={id}>{name}</li>
+                                    ))}
+                                </ul> */}
                             </td>
+                            <td>{fact}</td>
                             <td>
                                 <i className="edit-icon" onClick={() => handleEditClick(id)}>
                                     <AiFillEdit />

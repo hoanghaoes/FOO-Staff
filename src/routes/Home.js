@@ -1,17 +1,58 @@
-// src/components/HomeScreen.js
+// HomeScreen.js
 import React from 'react';
-import './Home.css';
+import { Heading, Text } from 'rebass';
+import {
+  Hero,
+  CallToAction,
+  ScrollDownIndicator,
+  Section,
+  Checklist,
+} from 'react-landing-page';
 
-const HomeScreen = () => {
- return (
-    <div className="home-screen">
-      <div className="icon-container">
-        <div className="icon"></div>
-      </div>
-      <h1 className="title">Welcome to Our App</h1>
-      <p className="description">Explore, discover, and share.</p>
-    </div>
- );
-};
+const featherCheckmark = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+    <polyline points="22 4 12 14.01 9 11.01" />
+  </svg>
+);
+
+const HomeScreen = () => (
+  <>
+    <Hero
+      color="black"
+      bg="white"
+      // backgroundImage="https://source.unsplash.com/jxaj-UrzQbc/1600x900"
+    >
+      <Heading>Name of your app</Heading>
+      <Text as="p" variant="subtitle">
+        a couple more words
+      </Text>
+      <CallToAction href="/getting-started" mt={3}>
+        Get Started
+      </CallToAction>
+      <ScrollDownIndicator />
+    </Hero>
+    <Section
+      width={1}
+      heading="Why pick this library?"
+      subhead="maybe this will help"
+    >
+      <Checklist
+        children={['Open Source', 'React best practices', 'Practical API']}
+        checkmark={featherCheckmark}
+      />
+    </Section>
+  </>
+);
 
 export default HomeScreen;

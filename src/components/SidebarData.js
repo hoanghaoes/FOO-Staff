@@ -31,12 +31,6 @@ export const SidebarData = [
     cName: "nav-text",
  },
  {
-   title: "Fact",
-   path: "/fact",
-   icon: <AiIcons.AiFillCheckCircle />,
-   cName: "nav-text",
-},
- {
     title: "Event",
     path: "/event",
     icon: <IoIcons.IoIosCalendar />,

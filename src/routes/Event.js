@@ -5,13 +5,13 @@ import axios from "axios";
 import "./Event.css";
 import { AiFillEdit, AiFillDelete, AiFillExclamationCircle, AiFillFileAdd, AiFillFastBackward, AiFillFastForward, AiFillBackward, AiFillForward } from "react-icons/ai";
 // import AddEvent from "./addEvents";
-// import EventDetail from "./QuestionDetail";
-// import UpdateEvent from "./updateQuestion";
+// import EventDetail from "./EventDetail";
+// import UpdateEvent from "./updateEvent";
 
 const Events = () => {
     const [events, setEvents] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [eventsPerPage, setEventsPerPage] = useState(15);
+    const [eventsPerPage, setEventsPerPage] = useState(5);
     const accessToken = localStorage.getItem('accessToken');
     const navigate = useNavigate();
 
@@ -22,8 +22,7 @@ const Events = () => {
             });
 
             const updatedEvents = eventsResponse.data.map((event) => {
-                const imageBlob = new Blob([event.image.data], { type: event.image.contentType });
-                const imageUrl = URL.createObjectURL(imageBlob);
+                const imageUrl = `data:${event.image.contentType};base64,${event.image.data}`;
                 return { ...event, imageUrl };
             });
 
@@ -37,11 +36,11 @@ const Events = () => {
         fetchEvents();
     }, []);
 
-    const indexOfLastQuestion = currentPage * eventsPerPage;
-    const indexOfFirstQuestion = indexOfLastQuestion - eventsPerPage;
-    const currentEvents = events.slice(indexOfFirstQuestion, indexOfLastQuestion);
+    const indexOfLastEvent = currentPage * eventsPerPage;
+    const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
+    const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
 
-    const deleteQuestion = async (id) => {
+    const deleteEvent = async (id) => {
         await axios.delete(`http://35.198.240.131:8081/api/v1/events/${id}`, {
             headers: { Authorization: `Bearer ${accessToken}` },
         });
@@ -49,12 +48,12 @@ const Events = () => {
     };
 
     const handleInfoClick = (id) => {
-        // Navigate to QuestionDetail component
+        // Navigate to EventDetail component
         navigate(`/event-detail/${id}`);
     };
 
     const handleEditClick = (id) => {
-        // Navigate to UpdateQuestion component
+        // Navigate to UpdateEvent component
         navigate(`/update-event/${id}`);
     };
 
@@ -89,13 +88,13 @@ const Events = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentEvents.map(({ id, eventName, time, address, imageUrl}, index) => (
+                    {currentEvents.map(({ id, eventName, time, address, imageUrl }, index) => (
                         <tr key={id}>
                             <td>{eventName}</td>
                             <td>{time}</td>
                             <td>{address}</td>
                             <td>
-                                <img className="event-image" src={imageUrl} alt={`Event ${index + 1}`} />
+                                <img className="event-image" src={imageUrl} alt={`Event ${index + 1}`} width={"200px"} height={"auto"} />
                             </td>
                             <td>
                                 <i className="info-icon" onClick={() => handleInfoClick(id)}>
@@ -108,7 +107,7 @@ const Events = () => {
                                 </i>
                             </td>
                             <td>
-                                <i className="delete-icon" onClick={() => deleteQuestion(id)}>
+                                <i className="delete-icon" onClick={() => deleteEvent(id)}>
                                     <AiFillDelete />
                                 </i>
                             </td>

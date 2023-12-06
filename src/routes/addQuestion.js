@@ -1,7 +1,7 @@
-// AddQuestion.js
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./addQuestion.css";
+import AddAnswer from "./addAnswer"; // Import the AddAnswer component
 
 const AddQuestion = () => {
   const [formData, setFormData] = useState({
@@ -9,7 +9,7 @@ const AddQuestion = () => {
     question: '',
     point: '',
     correctAnswer: '',
-    image: null, // Use null to represent the file
+    image: null,
     description: ''
   });
 
@@ -19,19 +19,20 @@ const AddQuestion = () => {
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
-    // If the input is a file input, update the 'image' property with the selected file
     if (name === 'image') {
       setFormData({ ...formData, [name]: files[0] });
+    } else if (name === 'answer') {
+      const newAnswers = [...formData.answer];
+      newAnswers[e.target.dataset.index] = value;
+      setFormData({ ...formData, answer: newAnswers });
     } else {
       setFormData({ ...formData, [name]: value });
     }
   };
 
-  const addQuestion = async () => {
+  const submitQuestion = async () => {
     try {
       const form = new FormData();
-
-      // Append each form field to the FormData object
       form.append('locationId', formData.locationId);
       form.append('question', formData.question);
       form.append('point', formData.point);
@@ -39,20 +40,23 @@ const AddQuestion = () => {
       form.append('image', formData.image);
       form.append('description', formData.description);
 
-      const responseQuestion = await fetch('http://35.198.240.131:8081/api/v1/quizzes', {
-        method: "POST",
+      const response = await fetch('http://35.198.240.131:8081/api/v1/quizzes', {
+        method: 'POST',
         body: form,
         headers: {
           'Authorization': `Bearer ${accessToken}`
         },
       });
 
-      if (!responseQuestion.ok) {
+      if (!response.ok) {
         throw new Error('Something went wrong');
       }
 
-      const { quizzesId } = await responseQuestion.json();
-      history(`/add-answer/${quizzesId}`);
+      const { quizzesId } = await response.json();
+
+      history("/question")
+      // Render the AddAnswer component
+      return <AddAnswer quizzesId={quizzesId} />;
     } catch (error) {
       console.error('Error:', error);
     }
@@ -102,7 +106,7 @@ const AddQuestion = () => {
           type="text"
           placeholder="Description"
         />
-        <button onClick={addQuestion} type="submit">
+        <button onClick={submitQuestion} type="submit">
           Add
         </button>
       </div>

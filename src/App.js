@@ -6,16 +6,16 @@ import Question from "./routes/Question";
 import AddQuestion from "./routes/addQuestion";
 import Mysterys from "./routes/Mystery";
 import Event from "./routes/Event";
-import Facts from "./routes/Fact";
 import AddMystery from "./routes/addMystery";
-import AddFact from "./routes/addFact";
-import updateQuestion from "./routes/updateQuestion";
+import EditQuestion from "./routes/updateQuestion";
 import Artifact from "./routes/Artifact";
 import "./App.css";
 import AddEvent from "./routes/addEvent";
 import HomeScreen from "./routes/Home";
 import Locations from "./routes/Location";
 import AddLocation from "./routes/addLocations";
+import AddAnswer from "./routes/addAnswer";
+import UpdateLocation from "./routes/updateLocation";
 
 const AppLayout = ({ children }) => (
   <>
@@ -45,29 +45,28 @@ const App = () => (
                     <Route path="/mystery" element={<Mysterys />} />
                     <Route path="/artifact" element={<Artifact />} />
                     <Route path="/event" element={<Event />} />
-                    <Route path="/fact" element={<Facts />} />
                     <Route path="/locations" element={<Locations />} />
                     <Route path="/add-question" element={<AddQuestion />} />
+                    <Route path="/add-answer" element={<AddAnswer />} />
                     <Route path="/add-mystery" element={<AddMystery />} />
                     <Route path="/add-event" element={<AddEvent />} />
                     <Route path="/add-location" element={<AddLocation />} />   
-                    <Route path="/add-fact" element={<AddFact />} />
                     <Route
-                      path="/question/update-question/:id?"
+                      path="/update-question/:id"
+                      element={<EditQuestion />}
+                    />
+                    <Route
+                      path="/update-location/:id"
+                      element={<UpdateLocation />}
+                    />
+                    {/* <Route
+                      path="/update-artifact/:id?"
                       element={<updateQuestion />}
                     />
                     <Route
-                      path="/fact/update-fact/:id?"
+                      path="/update-event/:id?"
                       element={<updateQuestion />}
-                    />
-                    <Route
-                      path="/artifact/update-artifact/:id?"
-                      element={<updateQuestion />}
-                    />
-                    <Route
-                      path="/event/update-event/:id?"
-                      element={<updateQuestion />}
-                    />
+                    /> */}
                   </Routes>
                 </AppLayout>
               }
