@@ -13,10 +13,6 @@ Downloads and installs the necessary dependencies of a [Node.js](https://nodejs.
 Intall axios to call api.\
 About axios: axios is just a library for making HTTP requests from JavaScript, so you can use it in any JavaScript application, not just React apps. However, React apps often require working with asynchronous data, and axios is a convenient tool for managing those asynchronous requests.
 
-### `npm install rebass react-landing-page`
-
-Install the necessary dependencies for creating a responsive landing page using React, Rebass, and React Landing Page.
-
 ### `npm start`
 
 Runs the app in the development mode.\

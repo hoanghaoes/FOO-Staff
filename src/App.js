@@ -10,7 +10,6 @@ import AddMystery from "./routes/addMystery";
 import UpdateQuestion from "./routes/updateQuestion";
 import "./App.css";
 import AddEvent from "./routes/addEvent";
-import HomeScreen from "./routes/Home";
 import Locations from "./routes/Location";
 import AddLocation from "./routes/addLocations";
 import AddAnswer from "./routes/addAnswer";
@@ -39,7 +38,6 @@ const App = () => (
               element={
                 <AppLayout>
                   <Routes>
-                    <Route path="/home" element={<HomeScreen />} />
                     <Route path="/question" element={<Question />} />
                     <Route path="/mystery" element={<Mysterys />} />
                     <Route path="/event" element={<Event />} />

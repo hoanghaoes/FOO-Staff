@@ -39,7 +39,7 @@ const LoginForm = () => {
         });
 
         if (response.status === 200) {
-          navigate('/home');
+          navigate('/question');
           console.log(response.data);
           const accessToken = response.data.accessKey;
           localStorage.setItem('accessToken', accessToken);

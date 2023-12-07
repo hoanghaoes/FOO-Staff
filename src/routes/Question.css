@@ -115,22 +115,3 @@
 .action-column {
     width: 3%;
 }
-
-/* .question-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
-}
-   
-.question-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-} */

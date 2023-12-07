@@ -36,3 +36,8 @@ body {
 .add-answer button:hover {
     background-color: #557C55;
 }
+
+.text {
+    color: white;
+    padding: 10px;
+}
