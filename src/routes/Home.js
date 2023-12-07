@@ -33,22 +33,22 @@ const HomeScreen = () => (
       bg="white"
       // backgroundImage="https://source.unsplash.com/jxaj-UrzQbc/1600x900"
     >
-      <Heading>Name of your app</Heading>
+      <Heading>FOO-Staff</Heading>
       <Text as="p" variant="subtitle">
-        a couple more words
+        App Management
       </Text>
-      <CallToAction href="/getting-started" mt={3}>
+      <CallToAction href="/question" mt={3}>
         Get Started
       </CallToAction>
       <ScrollDownIndicator />
     </Hero>
     <Section
       width={1}
-      heading="Why pick this library?"
-      subhead="maybe this will help"
+      heading="List of contents"
+      subhead="Here"
     >
       <Checklist
-        children={['Open Source', 'React best practices', 'Practical API']}
+        children={['Questions', 'Locations', 'Mystery Items', 'Artifacts', 'Events']}
         checkmark={featherCheckmark}
       />
     </Section>

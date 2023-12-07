@@ -8,6 +8,7 @@ import Mysterys from "./routes/Mystery";
 import Event from "./routes/Event";
 import AddMystery from "./routes/addMystery";
 import EditQuestion from "./routes/updateQuestion";
+import EditEvent from "./routes/updateEvent";
 import Artifact from "./routes/Artifact";
 import "./App.css";
 import AddEvent from "./routes/addEvent";
@@ -59,14 +60,10 @@ const App = () => (
                       path="/update-location/:id"
                       element={<UpdateLocation />}
                     />
-                    {/* <Route
-                      path="/update-artifact/:id?"
-                      element={<updateQuestion />}
-                    />
                     <Route
-                      path="/update-event/:id?"
-                      element={<updateQuestion />}
-                    /> */}
+                      path="/update-event/:id"
+                      element={<EditEvent />}
+                    />
                   </Routes>
                 </AppLayout>
               }
