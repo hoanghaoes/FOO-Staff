@@ -57,6 +57,7 @@ const AddEvent = () => {
   return (
     <div className="js-container">
       <div className="add-event">
+      <h1 className="text">Add Event</h1>
         <input
           name="eventName"
           value={formData.eventName}

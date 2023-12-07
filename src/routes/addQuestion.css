@@ -17,10 +17,10 @@ body {
     margin-bottom: 10px;
     padding: 8px;
     font-size: 16px;
-    background: rgba(134, 167, 137, 0.63);
+    background: rgba(254, 254, 254, 0.33);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(6.7px);
-    -webkit-backdrop-filter: blur(6.7px);    
+    backdrop-filter: blur(8.7px);
+    -webkit-backdrop-filter: blur(8.7px);
 }
 
 .add-question button {
@@ -35,4 +35,9 @@ body {
 
 .add-question button:hover {
     background-color: #557C55;
+}
+
+.text {
+    color: white;
+    padding: 20px;
 }

@@ -31,6 +31,7 @@ const AddAnswer = ({ quizzesId }) => {
 
     return (
         <div className="add-answer">
+            <h1 className="text">Add Answer</h1>
             <input
                 name="quizId"
                 value={quizId}

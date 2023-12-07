@@ -65,6 +65,7 @@ const AddQuestion = () => {
   return (
     <div className="js-container">
       <div className="add-question">
+        <h1 className="text">Add Question</h1>
         <input
           name="locationId"
           value={formData.locationId}

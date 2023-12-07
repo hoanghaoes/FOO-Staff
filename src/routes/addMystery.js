@@ -61,6 +61,7 @@ const AddMystery = () => {
   return (
     <div className="js-container">
       <div className="add-mystery">
+      <h1 className="text">Add Mystery Item</h1>
         <input
           name="name"
           value={formData.name}
