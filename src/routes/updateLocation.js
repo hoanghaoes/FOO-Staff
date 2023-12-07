@@ -85,7 +85,7 @@ const UpdateLocation = () => {
   return (
     <div className="js-container">
       <div className="update-location">
-        <li>Name</li>
+        <li className="text">Name</li>
         <input
           name="name"
           value={formData.name}
@@ -93,7 +93,7 @@ const UpdateLocation = () => {
           type="text"
           placeholder="Name"
         />
-        <li>Địa chỉ</li>
+        <li className="text">Địa chỉ</li>
         <input
           name="nameInMap"
           value={formData.nameInMap}
@@ -101,7 +101,7 @@ const UpdateLocation = () => {
           type="text"
           placeholder="Địa chỉ"
         />
-        <li>Latitude</li>
+        <li className="text">Latitude</li>
         <input
           name="latitude"
           value={formData.latitude}
@@ -109,7 +109,7 @@ const UpdateLocation = () => {
           type="text"
           placeholder="Latitude"
         />
-        <li>Longitude</li>
+        <li className="text">Longitude</li>
         <input
           name="longitude"
           value={formData.longitude}
@@ -117,14 +117,14 @@ const UpdateLocation = () => {
           type="text"
           placeholder="Longitude"
         />
-        <li>Image</li>
+        <li className="text">Image</li>
         <input
           name="image"
           onChange={handleChange}
           type="file"
           placeholder="Image"
         />
-        <li>Description</li>
+        <li className="text">Description</li>
         <input
           name="description"
           value={formData.description}
@@ -132,7 +132,7 @@ const UpdateLocation = () => {
           type="text"
           placeholder="Description"
         />
-        <li>Fact</li>
+        <li className="text">Fact</li>
         <input
           name="fact"
           value={formData.fact}

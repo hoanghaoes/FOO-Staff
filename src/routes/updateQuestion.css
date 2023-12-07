@@ -35,3 +35,7 @@ padding: 20px;
 .back-button:hover {
     background-color: #f5a962;
 }
+
+.text {
+    color: white;
+}

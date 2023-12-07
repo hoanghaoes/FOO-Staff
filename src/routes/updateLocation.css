@@ -36,3 +36,7 @@ body {
 .update-location button:hover {
     background-color: #557C55;
 }
+
+.text {
+    color: white;
+}

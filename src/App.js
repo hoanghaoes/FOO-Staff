@@ -8,8 +8,6 @@ import Mysterys from "./routes/Mystery";
 import Event from "./routes/Event";
 import AddMystery from "./routes/addMystery";
 import UpdateQuestion from "./routes/updateQuestion";
-import EditEvent from "./routes/updateEvent";
-import Artifact from "./routes/Artifact";
 import "./App.css";
 import AddEvent from "./routes/addEvent";
 import HomeScreen from "./routes/Home";
@@ -44,7 +42,6 @@ const App = () => (
                     <Route path="/home" element={<HomeScreen />} />
                     <Route path="/question" element={<Question />} />
                     <Route path="/mystery" element={<Mysterys />} />
-                    <Route path="/artifact" element={<Artifact />} />
                     <Route path="/event" element={<Event />} />
                     <Route path="/locations" element={<Locations />} />
                     <Route path="/add-question" element={<AddQuestion />} />
@@ -59,10 +56,6 @@ const App = () => (
                     <Route
                       path="/update-location/:id"
                       element={<UpdateLocation />}
-                    />
-                    <Route
-                      path="/update-event/:id"
-                      element={<EditEvent />}
                     />
                   </Routes>
                 </AppLayout>

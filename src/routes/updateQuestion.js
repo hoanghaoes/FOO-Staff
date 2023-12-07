@@ -83,7 +83,7 @@ const UpdateQuestion = () => {
   return (
     <div className="js-container">
       <div className="update-location">
-        <li>Name</li>
+        <li className="text">Name</li>
         <input
           name="locationId"
           value={formData.locationId}
@@ -91,7 +91,7 @@ const UpdateQuestion = () => {
           type="text"
           placeholder="LocationId"
         />
-        <li>Câu hỏi</li>
+        <li className="text">Câu hỏi</li>
         <input
           name="question"
           value={formData.question}
@@ -99,7 +99,7 @@ const UpdateQuestion = () => {
           type="text"
           placeholder="Câu hỏi "
         />
-        <li>Điểm</li>
+        <li className="text">Điểm</li>
         <input
           name="point"
           value={formData.point}
@@ -107,7 +107,7 @@ const UpdateQuestion = () => {
           type="text"
           placeholder="Điểm"
         />
-        <li>Đáp án đúng</li>
+        <li className="text">Đáp án đúng</li>
         <input
           name="correctAnswer"
           value={formData.correctAnswer}
@@ -115,14 +115,14 @@ const UpdateQuestion = () => {
           type="text"
           placeholder="Correct"
         />
-        <li>Image</li>
+        <li className="text">Image</li>
         <input
           name="image"
           onChange={handleChange}
           type="file"
           placeholder="Image"
         />
-        <li>Description</li>
+        <li className="text">Description</li>
         <input
           name="description"
           value={formData.description}
