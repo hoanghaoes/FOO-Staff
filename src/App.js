@@ -7,7 +7,7 @@ import AddQuestion from "./routes/addQuestion";
 import Mysterys from "./routes/Mystery";
 import Event from "./routes/Event";
 import AddMystery from "./routes/addMystery";
-import EditQuestion from "./routes/updateQuestion";
+import UpdateQuestion from "./routes/updateQuestion";
 import EditEvent from "./routes/updateEvent";
 import Artifact from "./routes/Artifact";
 import "./App.css";
@@ -54,7 +54,7 @@ const App = () => (
                     <Route path="/add-location" element={<AddLocation />} />   
                     <Route
                       path="/update-question/:id"
-                      element={<EditQuestion />}
+                      element={<UpdateQuestion />}
                     />
                     <Route
                       path="/update-location/:id"

@@ -2,22 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import "./updateQuestion.css";
 
-const EditQuestion = () => {
+const UpdateQuestion = () => {
   const [formData, setFormData] = useState({
     locationId: '',
     question: '',
     point: '',
     correctAnswer: '',
-    image: null,
-    description: '',
+    image: null, // Use null to represent the file
+    description: ''
   });
 
+  const { id } = useParams();
   const accessToken = localStorage.getItem('accessToken');
   const history = useNavigate();
-  const {id} = useParams();
 
   useEffect(() => {
-    const fetchQuestions = async () => {
+    const fetchQuestion = async () => {
       try {
         const response = await fetch(`http://35.198.240.131:8081/api/v1/quizzes/${id}`, {
           headers: {
@@ -36,7 +36,7 @@ const EditQuestion = () => {
       }
     };
 
-    fetchQuestions();
+    fetchQuestion();
   }, [id, accessToken]);
 
   const handleChange = (e) => {
@@ -50,7 +50,7 @@ const EditQuestion = () => {
     }
   };
 
-  const editQuestion = async () => {
+  const updateQuestion = async () => {
     try {
       const form = new FormData();
 
@@ -62,7 +62,7 @@ const EditQuestion = () => {
       form.append('image', formData.image);
       form.append('description', formData.description);
 
-      const responseQuestion = await fetch(`http://35.198.240.131:8081/api/v1/quizzes/${id}`, {
+      const response = await fetch(`http://35.198.240.131:8081/api/v1/quizzes/${id}`, {
         method: "PUT",
         body: form,
         headers: {
@@ -70,11 +70,10 @@ const EditQuestion = () => {
         },
       });
 
-      if (!responseQuestion.ok) {
-        throw new Error('Something went wrong');
+      if (!response.ok) {
+        throw new Error('Error updating location');
       }
 
-      // Handle the response or redirect to another page
       history(`/question`);
     } catch (error) {
       console.error('Error:', error);
@@ -83,43 +82,35 @@ const EditQuestion = () => {
 
   return (
     <div className="js-container">
-      <div className="add-question">
+      <div className="update-location">
         <input
-          name="locationId"
+          name="name"
           value={formData.locationId}
           onChange={handleChange}
           type="text"
-          placeholder="LocationId"
+          placeholder="Name"
         />
         <input
-          name="question"
+          name="nameInMap"
           value={formData.question}
           onChange={handleChange}
           type="text"
-          placeholder="Question"
+          placeholder="Địa chỉ"
         />
         <input
-          name="point"
+          name="latitude"
           value={formData.point}
           onChange={handleChange}
           type="text"
-          placeholder="Point"
+          placeholder="Latitude"
         />
         <input
-          name="correctAnswer"
+          name="longitude"
           value={formData.correctAnswer}
           onChange={handleChange}
           type="text"
-          placeholder="CorrectAnswer"
+          placeholder="Longitude"
         />
-        {/* Handle the image display based on your UI logic */}
-        {formData.image && (
-          <img
-            src={URL.createObjectURL(formData.image)}
-            alt="Current Image"
-            width="100"
-          />
-        )}
         <input
           name="image"
           onChange={handleChange}
@@ -133,12 +124,12 @@ const EditQuestion = () => {
           type="text"
           placeholder="Description"
         />
-        <button onClick={editQuestion} type="submit">
-          Edit
+        <button onClick={updateQuestion} type="submit">
+          Update
         </button>
       </div>
     </div>
   );
 };
 
-export default EditQuestion;
+export default UpdateQuestion;

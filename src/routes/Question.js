@@ -13,7 +13,7 @@ const Questions = () => {
 
   const fetchQuestions = async () => {
     try {
-      const questionsResponse = await axios.get("http://35.198.240.131:8081/api/v1/quizzes", {
+      const questionsResponse = await axios.get("http://35.198.240.131:8081/api/v1/quizzes/all", {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
@@ -80,7 +80,7 @@ const Questions = () => {
           className="add-button"
           onClick={() => navigate('/add-question')}
         >
-          Add
+          Add Quiz
           <AiFillFileAdd className="add-icon" />
         </button>
       </Link>

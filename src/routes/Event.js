@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Event.css";
-import { AiFillEdit, AiFillDelete, AiFillExclamationCircle, AiFillFileAdd, AiFillFastBackward, AiFillFastForward, AiFillBackward, AiFillForward } from "react-icons/ai";
+import { AiFillFileAdd, AiFillFastBackward, AiFillFastForward, AiFillBackward, AiFillForward } from "react-icons/ai";
 // import AddEvent from "./addEvents";
 // import EventDetail from "./EventDetail";
 // import UpdateEvent from "./updateEvent";
@@ -82,9 +82,6 @@ const Events = () => {
                         <th className="time-column">Time</th>
                         <th className="address-column">Adress</th>
                         <th className="image-column">Image</th>
-                        <th className="action-column"></th>
-                        <th className="action-column"></th>
-                        <th className="action-column"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -96,27 +93,12 @@ const Events = () => {
                             <td>
                                 <img className="event-image" src={imageUrl} alt={`Event ${index + 1}`} width={"200px"} height={"auto"} />
                             </td>
-                            <td>
-                                <i className="info-icon" onClick={() => handleInfoClick(id)}>
-                                    <AiFillExclamationCircle />
-                                </i>
-                            </td>
-                            <td>
-                                <i className="edit-icon" onClick={() => handleEditClick(id)}>
-                                    <AiFillEdit />
-                                </i>
-                            </td>
-                            <td>
-                                <i className="delete-icon" onClick={() => deleteEvent(id)}>
-                                    <AiFillDelete />
-                                </i>
-                            </td>
                         </tr>
                     ))}
                     {emptyRows > 0 && (
                         Array.from({ length: emptyRows }, (_, index) => (
                             <tr key={`empty-${index}`}>
-                                <td colSpan="7"></td>
+                                <td colSpan="4"></td>
                             </tr>
                         ))
                     )}
