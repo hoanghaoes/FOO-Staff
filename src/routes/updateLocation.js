@@ -76,7 +76,7 @@ const UpdateLocation = () => {
         throw new Error('Error updating location');
       }
 
-      history(`/location-detail/${id}`);
+      history(`/location`);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -85,6 +85,7 @@ const UpdateLocation = () => {
   return (
     <div className="js-container">
       <div className="update-location">
+        <li>Name</li>
         <input
           name="name"
           value={formData.name}
@@ -92,6 +93,7 @@ const UpdateLocation = () => {
           type="text"
           placeholder="Name"
         />
+        <li>Địa chỉ</li>
         <input
           name="nameInMap"
           value={formData.nameInMap}
@@ -99,6 +101,7 @@ const UpdateLocation = () => {
           type="text"
           placeholder="Địa chỉ"
         />
+        <li>Latitude</li>
         <input
           name="latitude"
           value={formData.latitude}
@@ -106,6 +109,7 @@ const UpdateLocation = () => {
           type="text"
           placeholder="Latitude"
         />
+        <li>Longitude</li>
         <input
           name="longitude"
           value={formData.longitude}
@@ -113,12 +117,14 @@ const UpdateLocation = () => {
           type="text"
           placeholder="Longitude"
         />
+        <li>Image</li>
         <input
           name="image"
           onChange={handleChange}
           type="file"
           placeholder="Image"
         />
+        <li>Description</li>
         <input
           name="description"
           value={formData.description}
@@ -126,6 +132,7 @@ const UpdateLocation = () => {
           type="text"
           placeholder="Description"
         />
+        <li>Fact</li>
         <input
           name="fact"
           value={formData.fact}

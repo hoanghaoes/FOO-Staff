@@ -83,40 +83,46 @@ const UpdateQuestion = () => {
   return (
     <div className="js-container">
       <div className="update-location">
+        <li>Name</li>
         <input
-          name="name"
+          name="locationId"
           value={formData.locationId}
           onChange={handleChange}
           type="text"
-          placeholder="Name"
+          placeholder="LocationId"
         />
+        <li>Câu hỏi</li>
         <input
-          name="nameInMap"
+          name="question"
           value={formData.question}
           onChange={handleChange}
           type="text"
-          placeholder="Địa chỉ"
+          placeholder="Câu hỏi "
         />
+        <li>Điểm</li>
         <input
-          name="latitude"
+          name="point"
           value={formData.point}
           onChange={handleChange}
           type="text"
-          placeholder="Latitude"
+          placeholder="Điểm"
         />
+        <li>Đáp án đúng</li>
         <input
-          name="longitude"
+          name="correctAnswer"
           value={formData.correctAnswer}
           onChange={handleChange}
           type="text"
-          placeholder="Longitude"
+          placeholder="Correct"
         />
+        <li>Image</li>
         <input
           name="image"
           onChange={handleChange}
           type="file"
           placeholder="Image"
         />
+        <li>Description</li>
         <input
           name="description"
           value={formData.description}

@@ -80,6 +80,7 @@ const EditEvent = () => {
   return (
     <div className="js-container">
       <div className="add-event">
+        <li>Tên sự kiện</li>
         <input
           name="eventName"
           value={formData.eventName}
@@ -87,6 +88,7 @@ const EditEvent = () => {
           type="text"
           placeholder="Event Name"
         />
+        <li>Thời gian</li>
         <input
           name="time"
           value={formData.time}
@@ -94,6 +96,7 @@ const EditEvent = () => {
           type="text"
           placeholder="Time"
         />
+        <li>Địa chỉ</li>
         <input
           name="address"
           value={formData.address}
@@ -101,6 +104,7 @@ const EditEvent = () => {
           type="text"
           placeholder="Address"
         />
+        <li>Ảnh</li>
         {/* Handle the image display based on your UI logic */}
         {formData.image && (
           <img

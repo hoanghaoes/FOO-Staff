@@ -54,7 +54,7 @@ const AddLocation = () => {
       }
 
       const { locationId } = await responseLocation.json();
-      history(`/add-artifact/${locationId}`);
+      history(`/location`);
     } catch (error) {
       console.error('Error:', error);
     }

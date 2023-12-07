@@ -48,7 +48,7 @@ const AddEvent = () => {
       }
 
       const { eventsId } = await responseEvent.json();
-      history(`/add-answer/${eventsId}`);
+      history(`/add-event`);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -80,7 +80,6 @@ const AddEvent = () => {
         />
         <input
           name="image"
-          value={formData.image}
           onChange={handleChange}
           type="file"
           placeholder="Image"
