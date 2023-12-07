@@ -14,6 +14,8 @@ import Locations from "./routes/Location";
 import AddLocation from "./routes/addLocations";
 import AddAnswer from "./routes/addAnswer";
 import UpdateLocation from "./routes/updateLocation";
+import Artifacts from "./routes/Artifact";
+import AddArtifact from "./routes/addArtifact";
 
 const AppLayout = ({ children }) => (
   <>
@@ -42,11 +44,13 @@ const App = () => (
                     <Route path="/mystery" element={<Mysterys />} />
                     <Route path="/event" element={<Event />} />
                     <Route path="/locations" element={<Locations />} />
+                    <Route path="/artifacts" element={<Artifacts />} />
                     <Route path="/add-question" element={<AddQuestion />} />
                     <Route path="/add-answer" element={<AddAnswer />} />
                     <Route path="/add-mystery" element={<AddMystery />} />
                     <Route path="/add-event" element={<AddEvent />} />
-                    <Route path="/add-location" element={<AddLocation />} />   
+                    <Route path="/add-location" element={<AddLocation />} /> 
+                    <Route path="/add-artifact" element={<AddArtifact />} />
                     <Route
                       path="/update-question/:id"
                       element={<UpdateQuestion />}

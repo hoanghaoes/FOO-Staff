@@ -30,7 +30,12 @@ export const SidebarData = [
       icon: <IoIcons.IoIosCalendar />,
       cName: "nav-text",
    },
-
+   {
+      title: "Artifact",
+      path: "/artifacts",
+      icon: <FaIcons.FaBox />,
+      cName: "nav-text",
+   },
    {
       title: "Log out",
       path: "/",
