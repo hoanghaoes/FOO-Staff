@@ -73,6 +73,11 @@ const Mystery = () => {
     }
   };
 
+  const handleEditClick = (id) => {
+    // Navigate to UpdateQuestion component
+    navigate(`/update-mystery/${id}`);
+  };
+
   const paginate = (pageNumber) => {
     const totalPages = Math.ceil(mystery.length / mysteryPerPage);
     setCurrentPage(Math.max(1, Math.min(pageNumber, totalPages)));
@@ -124,7 +129,7 @@ const Mystery = () => {
               <td>{point}</td>
               <td>{description}</td>
               <td>
-                <i className="edit-icon"><AiFillEdit /></i>
+                <i className="edit-icon" onClick={() => handleEditClick(id)}><AiFillEdit /></i>
               </td>
               <td>
                 <i className="delete-icon" onClick={() => deleteMystery(id)}><AiFillDelete /></i>

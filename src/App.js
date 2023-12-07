@@ -16,6 +16,7 @@ import AddAnswer from "./routes/addAnswer";
 import UpdateLocation from "./routes/updateLocation";
 import Artifacts from "./routes/Artifact";
 import AddArtifact from "./routes/addArtifact";
+import UpdateMystery from "./routes/updateMystery";
 
 const AppLayout = ({ children }) => (
   <>
@@ -51,6 +52,7 @@ const App = () => (
                     <Route path="/add-event" element={<AddEvent />} />
                     <Route path="/add-location" element={<AddLocation />} /> 
                     <Route path="/add-artifact" element={<AddArtifact />} />
+                    <Route path="/update-mystery/:id" element={<UpdateMystery />} />
                     <Route
                       path="/update-question/:id"
                       element={<UpdateQuestion />}
