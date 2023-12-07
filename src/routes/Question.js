@@ -125,7 +125,7 @@ const Questions = () => {
                       className="question-image"
                       src={imageUrl}
                       alt={`Question ${index + 1}`}
-                      width={"150px"}
+                      width={"250px"}
                       height={"auto"}
                     />
                   )}

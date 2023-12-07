@@ -79,7 +79,6 @@
 .image-column,
 .questions-column,
 .action-column {
-    padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
@@ -109,7 +108,7 @@
 }
 
 .des-column {
-    width: 41%;
+    width: 44%;
 }
 
 .action-column {
